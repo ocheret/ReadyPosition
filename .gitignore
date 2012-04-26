@@ -1,1 +1,6 @@
-*~
+#
+# Files for git to ignore
+#
+*~	# emacs backup files
+*.swp	# vim working files
+build/	# ignore all build artifacts
