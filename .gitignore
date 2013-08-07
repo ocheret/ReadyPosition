@@ -6,4 +6,11 @@
 # Ignore vim swap files
 *.swp
 # Ignore build directories
-build/
+*~
+*.swp
+.DS_Store
+*.o
+*.pyc
+make.out.*
+tmp/
+Build_*/
