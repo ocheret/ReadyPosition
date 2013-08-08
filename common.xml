@@ -1,0 +1,40 @@
+<project>
+  <property name="src.dir" value="."/>
+  <property name="module.name" value="${ant.project.name}"/>
+  <property name="build.dir" value="../Build_${user.name}"/>
+  <property name="classes.dir" value="${build.dir}/${module.name}/classes"/>
+  <property name="jar.dir" value="${build.dir}/lib"/>
+  <property name="jar.file" value="${jar.dir}/${module.name}.jar"/>
+
+  <target name="verify">
+    <echo message="ant.project.name = ${ant.project.name}"/>
+    <echo message="src.dir = ${src.dir}"/>
+    <echo message="build.dir = ${build.dir}"/>
+    <echo message="classes.dir = ${classes.dir}"/>
+    <echo message="jar.dir = ${jar.dir}"/>
+    <echo message="jar.file = ${jar.file}"/>
+  </target>
+
+  <target name="generate">
+    <!-- Can be overridden to do something interesting. -->
+  </target>
+
+  <target name="compile" depends="generate">
+    <mkdir dir="${classes.dir}"/>
+    <javac srcdir="${src.dir}" includeantruntime="false"
+           destdir="${classes.dir}"/>
+  </target>
+
+  <target name="test" depends="compile">
+    <echo message="XXX - Run JUnit from here - XXX"/>
+  </target>
+
+  <target name="jar" depends="test">
+    <jar jarfile="${jar.file}" basedir="${classes.dir}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${classes.dir}"/>
+    <delete file="${jar.file}"/>
+  </target>
+</project>

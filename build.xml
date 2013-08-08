@@ -1,0 +1,50 @@
+<project>
+  <property name="build.dir" value="Build_${user.name}"/>
+  <property name="javadoc.dir" value="${build.dir}/javadoc"/>
+
+  <macrodef name="iterate">
+    <attribute name="target"/>
+    <sequential>
+      <subant target="@{target}">
+        <fileset dir="." includes="*/build.xml"/>
+      </subant>
+    </sequential>
+  </macrodef>
+
+  <target name="verify">
+    <echo message="javadoc.dir = ${javadoc.dir}"/>
+    <iterate target="verify"/>
+  </target>
+
+  <target name="generate">
+    <iterate target="generate"/>
+  </target>
+
+  <target name="compile">
+    <iterate target="compile"/>
+  </target>
+
+  <target name="test">
+    <iterate target="test"/>
+  </target>
+
+  <target name="jar">
+    <iterate target="jar"/>
+  </target>
+
+  <target name="clean">
+    <iterate target="clean"/>
+  </target>
+
+  <target name="javadoc">
+    <javadoc destdir="${javadoc.dir}" windowtitle="ReadyPosition API">
+      <sourcepath location="Collections"/>
+      <package name="com.readyposition.*"/>
+    </javadoc>
+  </target>
+
+  <target name="pure">
+    <delete dir="Build_${user.name}"/>
+  </target>
+
+</project>
