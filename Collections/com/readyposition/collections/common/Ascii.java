@@ -436,7 +436,7 @@ public class Ascii
      * @param sb a StringBuilder to append to. If this is a null a new
      *            StringBuilder will be made.
      * @param bytes the byte array to dump.
-     * @param pos the offset of the start of data of interest within
+     * @param offset the offset of the start of data of interest within
      *            the byte array.
      * @param length the number of bytes of interest within the byte
      *            array.

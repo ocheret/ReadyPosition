@@ -36,10 +36,18 @@
     <iterate target="clean"/>
   </target>
 
-  <target name="javadoc">
+  <target name="javadoc" depends="generate">
     <javadoc destdir="${javadoc.dir}" windowtitle="ReadyPosition API">
       <sourcepath location="Collections"/>
+      <!-- XXX - This path should probably be in a variable. -->
+      <sourcepath location="${build.dir}/Collections/generated"/>
       <package name="com.readyposition.*"/>
+      <classpath>
+        <fileset dir="ThirdParty">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+
     </javadoc>
   </target>
 

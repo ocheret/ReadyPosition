@@ -9,6 +9,7 @@
   <property name="jar.dir" value="${build.dir}/lib"/>
   <property name="jar.file" value="${jar.dir}/${module.name}.jar"/>
   <property name="thirdParty.dir" value="../ThirdParty"/>
+  <property name="pkg.root.dir" value="com/readyposition"/>
 
   <target name="init">
     <mkdir dir="${jar.dir}"/>
@@ -28,9 +29,14 @@
     <echo message="module.name = ${module.name}"/>
     <echo message="src.dir = ${src.dir}"/>
     <echo message="build.dir = ${build.dir}"/>
+    <echo message="module.dir = ${module.dir}"/>
+    <echo message="depend.dir = ${depend.dir}"/>
+    <echo message="gen.dir = ${gen.dir}"/>
     <echo message="classes.dir = ${classes.dir}"/>
     <echo message="jar.dir = ${jar.dir}"/>
     <echo message="jar.file = ${jar.file}"/>
+    <echo message="thirdParty.dir = ${thirdParty.dir}"/>
+    <echo message="pkg.root.dir = ${pkg.root.dir}"/>
   </target>
 
   <target name="generate" depends="init">
@@ -78,7 +84,7 @@
   </target>
 
   <target name="clean">
-    <delete dir="${classes.dir}"/>
+    <delete dir="${module.dir}"/>
     <delete file="${jar.file}"/>
   </target>
 </project>

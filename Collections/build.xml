@@ -1,3 +1,70 @@
 <project name="Collections">
   <import file="../common.xml"/>
+
+  <property name="pkg.dir" value="${pkg.root.dir}/collections"/>
+  <property name="src.pkg.dir" value="${src.dir}/${pkg.dir}"/>
+  <property name="gen.pkg.dir" value="${gen.dir}/${pkg.dir}"/>
+
+  <macrodef name="generateKeyType">
+    <attribute name="keyName"/>
+    <attribute name="keyType"/>
+    <attribute name="package"/>
+    <attribute name="fileBase"/>
+    <sequential>
+      <copy file="${src.pkg.dir}/@{package}/@{fileBase}_KeyName_.java"
+            toFile="${gen.pkg.dir}/@{package}/@{fileBase}@{keyName}.java">
+        <filterset begintoken="_" endtoken="_">
+          <filter token="KeyName" value="@{keyName}"/>
+          <filter token="KeyType" value="@{keyType}"/>
+          <filter token="Warning"
+                  value="***** DO NOT EDIT: Generated from template *****"/>
+        </filterset>
+      </copy>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="generateValueType">
+    <attribute name="valueName"/>
+    <attribute name="valueType"/>
+    <attribute name="package"/>
+    <attribute name="fileBase"/>
+    <sequential>
+      <copy file="${src.pkg.dir}/@{package}/@{fileBase}_ValueName_.java"
+            toFile="${gen.pkg.dir}/@{package}/@{fileBase}@{valueName}.java">
+        <filterset begintoken="_" endtoken="_">
+          <filter token="ValueName" value="@{valueName}"/>
+          <filter token="ValueType" value="@{valueType}"/>
+          <filter token="Warning"
+                  value="***** DO NOT EDIT: Generated from template *****"/>
+        </filterset>
+      </copy>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="generateValueTypes">
+    <attribute name="valueName"/>
+    <attribute name="valueType"/>
+    <sequential>
+      <!-- comparator -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="comparator" fileBase="Cmp"/>
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="comparator" fileBase="Eq"/>
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="comparator" fileBase="Comparator"/>
+    </sequential>
+  </macrodef>
+
+  <target name="generate" depends="init">
+    <mkdir dir="${gen.dir}"/>
+    <generateValueTypes valueName="Char" valueType="char"/>
+    <generateValueTypes valueName="Byte" valueType="byte"/>
+    <generateValueTypes valueName="Short" valueType="short"/>
+    <generateValueTypes valueName="Int" valueType="int"/>
+    <generateValueTypes valueName="Long" valueType="long"/>
+    <generateValueTypes valueName="Float" valueType="float"/>
+    <generateValueTypes valueName="Double" valueType="double"/>
+    <generateValueTypes valueName="Object" valueType="Object"/>
+  </target>
+
 </project>
