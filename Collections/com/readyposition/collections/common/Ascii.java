@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 public class Ascii
 {
     /** ASCII character printable representations. */
-    protected final static String[] s_glyphs = {
+    private final static String[] s_glyphs = {
         /* 0 */   "nul", "soh",  "stx", "etx",  "eot", "enq", "ack", "bel",
         /* 8 */   " bs", " ht",  " nl", " vt",  " np", " cr", " so", " si",
         /* 16 */  "dle", "dc1",  "dc2", "dc3",  "dc4", "nak", "syn", "etb",
@@ -129,19 +129,19 @@ public class Ascii
     public final static byte DEL = 0x1f;
 
     /** Hex characters used for formatting bytes. */
-    protected final static char[] s_hex = {
+    private final static char[] s_hex = {
         '0', '1', '2', '3', '4', '5', '6', '7',
         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
     };
 
     /** Padding in front of byte addresses */
-    protected final static char[] s_pad = { ' ', ' ', ' ', ' ' };
+    private final static char[] s_pad = { ' ', ' ', ' ', ' ' };
 
     /** Padding in front of byte addresses */
-    protected final static char[] z3_pad = { '0', '0', '0' };
+    private final static char[] z3_pad = { '0', '0', '0' };
 
     /** Padding in front of byte addresses */
-    protected final static char[] z4_pad = { '0', '0', '0', '0' };
+    private final static char[] z4_pad = { '0', '0', '0', '0' };
 
     /** Simple interface for a format fragment of a dumped line. */
     public interface Fragment {
@@ -150,9 +150,10 @@ public class Ascii
          *
          * @param sb the StringBuilder to append to
          * @param bytes the source of data for byte formatting fragments
-         * @param index XXX
-         * @param offset XXX
-         * @param length XXX
+         * @param index the byte past offset of the byte to start the line with
+         * @param offset the offset of the area of interest within the
+         *        bytes array
+         * @param length the length of the area of interest in the bytes array
          * @param rowBytes the number of bytes represented per dumped row
          */
         void format(StringBuilder sb, byte[] bytes, int index, int offset,
@@ -333,10 +334,10 @@ public class Ascii
         SPACE, HEX_BYTES, BAR, SPACE, GLYPH_BYTES };
 
     /** The default per row format to use. */
-    protected final static Fragment[] DEFAULT_FORMAT = NiceFormat;
+    public final static Fragment[] DEFAULT_FORMAT = NiceFormat;
 
     /** The default number of bytes to represent per row. */
-    protected final static int DEFAULT_ROW_BYTES = 8;
+    public final static int DEFAULT_ROW_BYTES = 8;
     
     /** Returns true if the Ascii character is printable. */
     public static boolean isPrintable(byte b) {

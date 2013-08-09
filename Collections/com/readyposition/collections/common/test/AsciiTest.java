@@ -11,7 +11,7 @@ import com.readyposition.collections.common.Ascii;
 
 public class AsciiTest
 {
-    private final static String s_expected =
+    private final static String s_expectedDump =
     "   0    0: 00 01 02 03 04 05 06 07 | nul soh stx etx eot enq ack bel \n" +
     "   8    8: 08 09 0A 0B 0C 0D 0E 0F |  bs  ht  nl  vt  np  cr  so  si \n" +
     "  16   10: 10 11 12 13 14 15 16 17 | dle dc1 dc2 dc3 dc4 nak syn etb \n" +
@@ -45,6 +45,11 @@ public class AsciiTest
     " 240   f0: F0 F1 F2 F3 F4 F5 F6 F7 | 240 241 242 243 244 245 246 247 \n" +
     " 248   f8: F8 F9 FA FB FC FD FE FF | 248 249 250 251 252 253 254 255 ";
 
+    private final static String s_expectedFrags =
+        "| |:|  20|  14|014|0014|20 21 22 23 24 25 26 27 " +
+        "| 20 21 22 23  24 25 26 27| sp   !   \"   #   $   %   &   ' " +
+        "| !\"#$%&'|";
+
     @Before
     public void setUp()  {
     }
@@ -62,7 +67,42 @@ public class AsciiTest
         bb.flip();
         String result = Ascii.dump(bb);
         assertEquals("Ascii.dump produced unexpected result",
-          s_expected, result);
-        System.out.println("Ascii.dump(bb) successfully produced\n" + result);
+          s_expectedDump, result);
+        // System.out.println("Ascii.dump(bb) successfully produced\n" +
+        //                    result);
+    }
+
+    @Test
+    public void testFragments() {
+        int NUM = 20;
+        byte[] bytes = new byte[20];
+        for (int i = 0; i < 20; i++) {
+            bytes[i] = (byte)(32 + i);
+        }
+        StringBuilder sb = new StringBuilder();
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.SPACE.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.COLON.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.DECIMAL_ADDR.format(sb, bytes, 20, 1, 19, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.HEX_ADDR.format(sb, bytes, 20, 1, 19, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.THREE_DIGIT_HEX_ADDR.format(sb, bytes, 20, 1, 19, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.FOUR_DIGIT_HEX_ADDR.format(sb, bytes, 20, 1, 19, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.HEX_BYTES.format(sb, bytes, 0, 0, 20, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.SPLIT_HEX_BYTES.format(sb, bytes, 0, 0, 20, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.GLYPH_BYTES.format(sb, bytes, 0, 0, 20, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        Ascii.PRINT_BYTES.format(sb, bytes, 0, 0, 20, 8);
+        Ascii.BAR.format(sb, bytes, 0, 0, 0, 0);
+        // System.out.println("sb = '" + sb + "'");
+        assertEquals("Fragment formatting produced unexpected result",
+                     s_expectedFrags, sb.toString());
     }
 }
