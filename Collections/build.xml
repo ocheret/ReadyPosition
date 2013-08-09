@@ -41,6 +41,28 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="generateKeyValueType">
+    <attribute name="keyName"/>
+    <attribute name="keyType"/>
+    <attribute name="valueName"/>
+    <attribute name="valueType"/>
+    <attribute name="package"/>
+    <attribute name="fileBase"/>
+    <sequential>
+      <copy file="${src.pkg.dir}/@{package}/@{fileBase}_KeyName__ValueName_.java"
+            toFile="${gen.pkg.dir}/@{package}/@{fileBase}@{keyName}@{valueName}.java">
+        <filterset begintoken="_" endtoken="_">
+          <filter token="KeyName" value="@{keyName}"/>
+          <filter token="KeyType" value="@{keyType}"/>
+          <filter token="ValueName" value="@{valueName}"/>
+          <filter token="ValueType" value="@{valueType}"/>
+          <filter token="Warning"
+                  value="***** DO NOT EDIT: Generated from template *****"/>
+        </filterset>
+      </copy>
+    </sequential>
+  </macrodef>
+
   <macrodef name="generateValueTypes">
     <attribute name="valueName"/>
     <attribute name="valueType"/>
@@ -58,6 +80,19 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="generateKeyValueTypes">
+    <attribute name="keyName"/>
+    <attribute name="keyType"/>
+    <attribute name="valueName"/>
+    <attribute name="valueType"/>
+    <sequential>
+      <!-- common -->
+      <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
+                            valueName="@{valueName}" valueType="@{valueType}"
+                            package="common" fileBase="Map"/>
+    </sequential>
+  </macrodef>
+
   <macrodef name="generateKeyTypes">
     <attribute name="keyName"/>
     <attribute name="keyType"/>
@@ -65,6 +100,24 @@
       <!-- common -->
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
                        package="common" fileBase="Set"/>
+
+      <!-- Nested generation of KeyValue types -->
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Char" valueType="char"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Byte" valueType="byte"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Short" valueType="short"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Int" valueType="int"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Long" valueType="long"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Float" valueType="float"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Double" valueType="double"/>
+      <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
+                             valueName="Object" valueType="Object"/>
     </sequential>
   </macrodef>
 
