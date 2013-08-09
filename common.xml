@@ -1,13 +1,31 @@
 <project>
-  <property name="src.dir" value="."/>
   <property name="module.name" value="${ant.project.name}"/>
+  <property name="src.dir" value="."/>
   <property name="build.dir" value="../Build_${user.name}"/>
-  <property name="classes.dir" value="${build.dir}/${module.name}/classes"/>
+  <property name="module.dir" value="${build.dir}/${module.name}"/>
+  <property name="depend.dir" value="${module.dir}/depend"/>
+  <property name="gen.dir" value="${module.dir}/generated"/>
+  <property name="classes.dir" value="${module.dir}/classes"/>
   <property name="jar.dir" value="${build.dir}/lib"/>
   <property name="jar.file" value="${jar.dir}/${module.name}.jar"/>
+  <property name="thirdParty.dir" value="../ThirdParty"/>
 
-  <target name="verify">
-    <echo message="ant.project.name = ${ant.project.name}"/>
+  <target name="init">
+    <mkdir dir="${jar.dir}"/>
+    <path id="classpath">
+      <pathelement location="${classes.dir}"/>
+      <fileset dir="${jar.dir}">
+        <include name="**/*.jar"/>
+        <exclude name="**/${module.name}.jar"/>
+      </fileset>
+      <fileset dir="${thirdParty.dir}">
+        <include name="**/*.jar"/>
+      </fileset>
+    </path>
+  </target>
+
+  <target name="verify" depends="init">
+    <echo message="module.name = ${module.name}"/>
     <echo message="src.dir = ${src.dir}"/>
     <echo message="build.dir = ${build.dir}"/>
     <echo message="classes.dir = ${classes.dir}"/>
@@ -15,18 +33,44 @@
     <echo message="jar.file = ${jar.file}"/>
   </target>
 
-  <target name="generate">
+  <target name="generate" depends="init">
+    <mkdir dir="${gen.dir}"/>
     <!-- Can be overridden to do something interesting. -->
   </target>
 
   <target name="compile" depends="generate">
     <mkdir dir="${classes.dir}"/>
-    <javac srcdir="${src.dir}" includeantruntime="false"
-           destdir="${classes.dir}"/>
+    <mkdir dir="${depend.dir}"/>
+    <depend srcdir="${src.dir}:${gen.dir}"
+            destdir="${classes.dir}" cache="${depend.dir}"/>
+    <javac includeantruntime="false" destdir="${classes.dir}">
+      <src location="${src.dir}"/>
+      <src location="${gen.dir}"/>
+      <classpath refid="classpath"/>
+    </javac>
   </target>
 
   <target name="test" depends="compile">
-    <echo message="XXX - Run JUnit from here - XXX"/>
+    <!-- Is there a less ugly way to do this? -->
+    <condition property="internal.excludeFromTests"
+               value="${excludeFromTests}">
+      <isset property="excludeFromTests"/>
+    </condition>
+    <condition property="internal.excludeFromTests"
+               value="">
+      <not><isset property="excludeFromTests"/></not>
+    </condition>
+    <junit failureProperty="junit.failed" errorProperty="junit.failed">
+      <classpath refid="classpath"/>
+      <formatter type="plain" usefile="false"/>
+      <batchtest>
+        <fileset dir="${classes.dir}">
+          <include name="**/test/*.class"/>
+          <exclude name="${internal.excludeFromTests}"/>
+        </fileset>
+      </batchtest>
+    </junit>
+    <fail message="Not all JUnit Tests Passed" if="junit.failed"/>
   </target>
 
   <target name="jar" depends="test">
