@@ -45,6 +45,9 @@
     <attribute name="valueName"/>
     <attribute name="valueType"/>
     <sequential>
+      <!-- common -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="common" fileBase="MapG"/>
       <!-- comparator -->
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
                          package="comparator" fileBase="Cmp"/>
@@ -52,6 +55,16 @@
                          package="comparator" fileBase="Eq"/>
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
                          package="comparator" fileBase="Comparator"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="generateKeyTypes">
+    <attribute name="keyName"/>
+    <attribute name="keyType"/>
+    <sequential>
+      <!-- common -->
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="common" fileBase="Set"/>
     </sequential>
   </macrodef>
 
@@ -65,6 +78,15 @@
     <generateValueTypes valueName="Float" valueType="float"/>
     <generateValueTypes valueName="Double" valueType="double"/>
     <generateValueTypes valueName="Object" valueType="Object"/>
+
+    <generateKeyTypes keyName="Char" keyType="char"/>
+    <generateKeyTypes keyName="Byte" keyType="byte"/>
+    <generateKeyTypes keyName="Short" keyType="short"/>
+    <generateKeyTypes keyName="Int" keyType="int"/>
+    <generateKeyTypes keyName="Long" keyType="long"/>
+    <generateKeyTypes keyName="Float" keyType="float"/>
+    <generateKeyTypes keyName="Double" keyType="double"/>
+    <generateKeyTypes keyName="Object" keyType="Object"/>
   </target>
 
 </project>
