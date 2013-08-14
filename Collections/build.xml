@@ -9,10 +9,11 @@
     <attribute name="keyName"/>
     <attribute name="keyType"/>
     <attribute name="package"/>
-    <attribute name="fileBase"/>
+    <attribute name="prefix" default=""/>
+    <attribute name="suffix" default=""/>
     <sequential>
-      <copy file="${src.pkg.dir}/@{package}/@{fileBase}_KeyName_.java"
-            toFile="${gen.pkg.dir}/@{package}/@{fileBase}@{keyName}.java">
+      <copy file="${src.pkg.dir}/@{package}/@{prefix}_KeyName_@{suffix}.java"
+            toFile="${gen.pkg.dir}/@{package}/@{prefix}@{keyName}@{suffix}.java">
         <filterset begintoken="_" endtoken="_">
           <filter token="KeyName" value="@{keyName}"/>
           <filter token="KeyType" value="@{keyType}"/>
@@ -27,10 +28,11 @@
     <attribute name="valueName"/>
     <attribute name="valueType"/>
     <attribute name="package"/>
-    <attribute name="fileBase"/>
+    <attribute name="prefix" default=""/>
+    <attribute name="suffix" default=""/>
     <sequential>
-      <copy file="${src.pkg.dir}/@{package}/@{fileBase}_ValueName_.java"
-            toFile="${gen.pkg.dir}/@{package}/@{fileBase}@{valueName}.java">
+      <copy file="${src.pkg.dir}/@{package}/@{prefix}_ValueName_@{suffix}.java"
+            toFile="${gen.pkg.dir}/@{package}/@{prefix}@{valueName}@{suffix}.java">
         <filterset begintoken="_" endtoken="_">
           <filter token="ValueName" value="@{valueName}"/>
           <filter token="ValueType" value="@{valueType}"/>
@@ -47,10 +49,11 @@
     <attribute name="valueName"/>
     <attribute name="valueType"/>
     <attribute name="package"/>
-    <attribute name="fileBase"/>
+    <attribute name="prefix" default=""/>
+    <attribute name="suffix" default=""/>
     <sequential>
-      <copy file="${src.pkg.dir}/@{package}/@{fileBase}_KeyName__ValueName_.java"
-            toFile="${gen.pkg.dir}/@{package}/@{fileBase}@{keyName}@{valueName}.java">
+      <copy file="${src.pkg.dir}/@{package}/@{prefix}_KeyName__ValueName_@{suffix}.java"
+            toFile="${gen.pkg.dir}/@{package}/@{prefix}@{keyName}@{valueName}@{suffix}.java">
         <filterset begintoken="_" endtoken="_">
           <filter token="KeyName" value="@{keyName}"/>
           <filter token="KeyType" value="@{keyType}"/>
@@ -69,17 +72,30 @@
     <sequential>
       <!-- common -->
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
-                         package="common" fileBase="MapG"/>
+                         package="common" prefix="MapG"/>
       <!-- comparator -->
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
-                         package="comparator" fileBase="Cmp"/>
+                         package="comparator" prefix="Cmp"/>
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
-                         package="comparator" fileBase="Eq"/>
+                         package="comparator" prefix="Eq"/>
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
-                         package="comparator" fileBase="Comparator"/>
+                         package="comparator" prefix="Comparator"/>
       <!-- hash -->
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
-                         package="hash" fileBase="HashMapG"/>
+                         package="hash" prefix="HashMapG"/>
+      <!-- search -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="search" prefix="Search"/>
+      <!-- sort -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="sort" prefix="PermutationSort"/>
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="sort" prefix="Sort"/>
+      <!-- vector -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="vector" prefix="Vector"/>
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="vector/test" prefix="Vector" suffix="Test"/>
     </sequential>
   </macrodef>
 
@@ -92,11 +108,11 @@
       <!-- common -->
       <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
                             valueName="@{valueName}" valueType="@{valueType}"
-                            package="common" fileBase="Map"/>
+                            package="common" prefix="Map"/>
       <!-- hash -->
       <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
                             valueName="@{valueName}" valueType="@{valueType}"
-                            package="hash" fileBase="HashMap"/>
+                            package="hash" prefix="HashMap"/>
     </sequential>
   </macrodef>
 
@@ -106,14 +122,14 @@
     <sequential>
       <!-- common -->
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
-                       package="common" fileBase="Set"/>
+                       package="common" prefix="Set"/>
       <!-- hash -->
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
-                       package="hash" fileBase="AbstractHash"/>
+                       package="hash" prefix="AbstractHash"/>
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
-                       package="hash" fileBase="Hash"/>
+                       package="hash" prefix="Hash"/>
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
-                       package="hash" fileBase="HashSet"/>
+                       package="hash" prefix="HashSet"/>
 
       <!-- Nested generation of KeyValue types -->
       <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
