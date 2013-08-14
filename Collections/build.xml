@@ -77,6 +77,9 @@
                          package="comparator" fileBase="Eq"/>
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
                          package="comparator" fileBase="Comparator"/>
+      <!-- hash -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="hash" fileBase="HashMapG"/>
     </sequential>
   </macrodef>
 
@@ -90,6 +93,10 @@
       <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
                             valueName="@{valueName}" valueType="@{valueType}"
                             package="common" fileBase="Map"/>
+      <!-- hash -->
+      <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
+                            valueName="@{valueName}" valueType="@{valueType}"
+                            package="hash" fileBase="HashMap"/>
     </sequential>
   </macrodef>
 
@@ -100,6 +107,13 @@
       <!-- common -->
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
                        package="common" fileBase="Set"/>
+      <!-- hash -->
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="hash" fileBase="AbstractHash"/>
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="hash" fileBase="Hash"/>
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="hash" fileBase="HashSet"/>
 
       <!-- Nested generation of KeyValue types -->
       <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"

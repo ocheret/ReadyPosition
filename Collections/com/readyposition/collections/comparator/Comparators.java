@@ -9,177 +9,215 @@ import com.readyposition.collections.common.*;
 public class Comparators {
     /** Comparator for char in ascending order. */
     public final static ComparatorChar CharAsc = new ComparatorChar() {
-        public boolean equals(char a, char b) {
-            return (a == b);
-        }
+            public boolean equals(char a, char b) {
+                return (a == b);
+            }
 
-        public int compare(char a, char b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(char a, char b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for char in descending order. */
     public final static ComparatorChar CharDesc = new ComparatorChar() {
-        public boolean equals(char a, char b) {
-            return (a == b);
-        }
+            public boolean equals(char a, char b) {
+                return (a == b);
+            }
 
-        public int compare(char a, char b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(char a, char b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for byte in ascending order. */
     public final static ComparatorByte ByteAsc = new ComparatorByte() {
-        public boolean equals(byte a, byte b) {
-            return (a == b);
-        }
+            public boolean equals(byte a, byte b) {
+                return (a == b);
+            }
 
-        public int compare(byte a, byte b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(byte a, byte b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for byte in descending order. */
     public final static ComparatorByte ByteDesc = new ComparatorByte() {
-        public boolean equals(byte a, byte b) {
-            return (a == b);
-        }
+            public boolean equals(byte a, byte b) {
+                return (a == b);
+            }
 
-        public int compare(byte a, byte b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(byte a, byte b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for short in ascending order. */
     public final static ComparatorShort ShortAsc = new ComparatorShort() {
-        public boolean equals(short a, short b) {
-            return (a == b);
-        }
+            public boolean equals(short a, short b) {
+                return (a == b);
+            }
 
-        public int compare(short a, short b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(short a, short b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for short in descending order. */
     public final static ComparatorShort ShortDesc = new ComparatorShort() {
-        public boolean equals(short a, short b) {
-            return (a == b);
-        }
+            public boolean equals(short a, short b) {
+                return (a == b);
+            }
 
-        public int compare(short a, short b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(short a, short b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for int in ascending order. */
     public final static ComparatorInt IntAsc = new ComparatorInt() {
-        public boolean equals(int a, int b) {
-            return (a == b);
-        }
+            public boolean equals(int a, int b) {
+                return (a == b);
+            }
 
-        public int compare(int a, int b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(int a, int b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for int in descending order. */
     public final static ComparatorInt IntDesc = new ComparatorInt() {
-        public boolean equals(int a, int b) {
-            return (a == b);
-        }
+            public boolean equals(int a, int b) {
+                return (a == b);
+            }
 
-        public int compare(int a, int b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(int a, int b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for long in ascending order. */
     public final static ComparatorLong LongAsc = new ComparatorLong() {
-        public boolean equals(long a, long b) {
-            return (a == b);
-        }
+            public boolean equals(long a, long b) {
+                return (a == b);
+            }
 
-        public int compare(long a, long b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(long a, long b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for long in descending order. */
     public final static ComparatorLong LongDesc = new ComparatorLong() {
-        public boolean equals(long a, long b) {
-            return (a == b);
-        }
+            public boolean equals(long a, long b) {
+                return (a == b);
+            }
 
-        public int compare(long a, long b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(long a, long b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for float in ascending order. */
     public final static ComparatorFloat FloatAsc = new ComparatorFloat() {
-        public boolean equals(float a, float b) {
-            return (a == b);
-        }
+            public boolean equals(float a, float b) {
+                return (a == b);
+            }
 
-        public int compare(float a, float b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(float a, float b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for float in descending order. */
     public final static ComparatorFloat FloatDesc = new ComparatorFloat() {
-        public boolean equals(float a, float b) {
-            return (a == b);
-        }
+            public boolean equals(float a, float b) {
+                return (a == b);
+            }
 
-        public int compare(float a, float b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(float a, float b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for double in ascending order. */
     public final static ComparatorDouble DoubleAsc = new ComparatorDouble() {
-        public boolean equals(double a, double b) {
-            return (a == b);
-        }
+            public boolean equals(double a, double b) {
+                return (a == b);
+            }
 
-        public int compare(double a, double b) {
-            return (a == b) ? 0 : ((a > b) ? 1 : -1);
-        }
-    };
+            public int compare(double a, double b) {
+                return (a == b) ? 0 : ((a > b) ? 1 : -1);
+            }
+        };
 
     /** Comparator for double in descending order. */
     public final static ComparatorDouble DoubleDesc = new ComparatorDouble() {
-        public boolean equals(double a, double b) {
-            return (a == b);
-        }
+            public boolean equals(double a, double b) {
+                return (a == b);
+            }
 
-        public int compare(double a, double b) {
-            return (a == b) ? 0 : ((a < b) ? 1 : -1);
-        }
-    };
+            public int compare(double a, double b) {
+                return (a == b) ? 0 : ((a < b) ? 1 : -1);
+            }
+        };
 
-    /** Identity equalizer for Objects. */
-    public final static EqG<Object> ObjectIdentityEq = new EqG<Object>() {
+    /** Generic identity equalizer for Objects. */
+    public final static EqG<Object> GenericObjectIdentityEq = new EqG<Object>() {
         public boolean equals(Object a, Object b) {
             return (a == b);
         }
     };
 
-    /** Equivalence Equalizer for Objects. */
-    public final static EqG<Object> ObjectEq = new EqG<Object>() {
+    /** Generic equivalence Equalizer for Objects. */
+    public final static EqG<Object> GenericObjectEq = new EqG<Object>() {
         public boolean equals(Object a, Object b) {
             return (a.equals(b));
         }
     };
 
-    /** Comparator for Comparables in ascending order. */
-    public final static ComparatorG<Object> ObjectAsc = new ComparatorG<Object>() {
+    /** Specific identity equalizer for Objects. */
+    public final static EqObject ObjectIdentityEq = new EqObject() {
+            public boolean equals(Object a, Object b) {
+                return (a == b);
+            }
+        };
+
+    /** Specific equivalence Equalizer for Objects. */
+    public final static EqObject ObjectEq = new EqObject() {
+            public boolean equals(Object a, Object b) {
+                return (a.equals(b));
+            }
+        };
+
+    /** Specific comparator for Comparables in ascending order. */
+    public final static ComparatorObject ObjectAsc = new ComparatorObject() {
+            @SuppressWarnings("unchecked")
+            public int compare(Object a, Object b) {
+                return ((Comparable) a).compareTo(b);
+            }
+
+            public boolean equals(Object a, Object b) {
+                return (a.equals(b));
+            }
+        };
+
+    /** Specific comparator for Comparables in descending order. */
+    public final static ComparatorObject ObjectDesc = new ComparatorObject() {
+            @SuppressWarnings("unchecked")
+            public int compare(Object a, Object b) {
+                return ((Comparable)b).compareTo(a);
+            }
+
+            public boolean equals(Object a, Object b) {
+                return (a.equals(b));
+            }
+        };
+
+    /** Generic comparator for Comparables in ascending order. */
+    public final static ComparatorG<Object> GenericObjectAsc = new ComparatorG<Object>() {
         @SuppressWarnings("unchecked")
         public int compare(Object a, Object b) {
-            return ((Comparable) a).compareTo(b);
+            return ((Comparable)a).compareTo(b);
         }
 
         public boolean equals(Object a, Object b) {
@@ -187,11 +225,11 @@ public class Comparators {
         }
     };
 
-    /** Comparator for Comparables in ascending order. */
-    public final static ComparatorG<Object> ObjectDesc = new ComparatorG<Object>() {
+    /** Generic comparator for Comparables in descending order. */
+    public final static ComparatorG<Object> GenericObjectDesc = new ComparatorG<Object>() {
         @SuppressWarnings("unchecked")
         public int compare(Object a, Object b) {
-            return ((Comparable) b).compareTo(a);
+            return ((Comparable)b).compareTo(a);
         }
 
         public boolean equals(Object a, Object b) {
