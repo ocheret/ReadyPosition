@@ -71,11 +71,11 @@
       <formatter type="plain" usefile="false"/>
       <batchtest>
         <fileset dir="${classes.dir}">
-          <include name="**/test/*.class"/>
+          <include name="**/test/*Test.class"/>
           <exclude name="${internal.excludeFromTests}"/>
         </fileset>
         <fileset dir="${gen.dir}">
-          <include name="**/test/*.class"/>
+          <include name="**/test/*Test.class"/>
           <exclude name="${internal.excludeFromTests}"/>
         </fileset>
       </batchtest>
