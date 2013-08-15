@@ -113,6 +113,9 @@
       <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
                             valueName="@{valueName}" valueType="@{valueType}"
                             package="hash" prefix="HashMap"/>
+      <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
+                            valueName="@{valueName}" valueType="@{valueType}"
+                            package="hash/test" prefix="HashMap" suffix="Test"/>
     </sequential>
   </macrodef>
 
