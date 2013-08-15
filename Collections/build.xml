@@ -83,6 +83,9 @@
       <!-- hash -->
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
                          package="hash" prefix="HashMapG"/>
+      <!-- heap -->
+      <generateValueType valueName="@{valueName}" valueType="@{valueType}"
+                         package="heap" prefix="HeapG"/>
       <!-- search -->
       <generateValueType valueName="@{valueName}" valueType="@{valueType}"
                          package="search" prefix="Search"/>
@@ -116,6 +119,13 @@
       <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
                             valueName="@{valueName}" valueType="@{valueType}"
                             package="hash/test" prefix="HashMap" suffix="Test"/>
+      <!-- heap -->
+      <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
+                            valueName="@{valueName}" valueType="@{valueType}"
+                            package="heap" prefix="Heap"/>
+      <generateKeyValueType keyName="@{keyName}" keyType="@{keyType}"
+                            valueName="@{valueName}" valueType="@{valueType}"
+                            package="heap/test" prefix="Heap" suffix="Test"/>
     </sequential>
   </macrodef>
 
@@ -126,13 +136,22 @@
       <!-- common -->
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
                        package="common" prefix="Set"/>
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="common" prefix="Map" suffix="G"/>
       <!-- hash -->
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
                        package="hash" prefix="AbstractHash"/>
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
                        package="hash" prefix="Hash"/>
       <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="hash" prefix="HashMap" suffix="G"/>
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
                        package="hash" prefix="HashSet"/>
+      <!-- heap -->
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="heap" prefix="AbstractHeap"/>
+      <generateKeyType keyName="@{keyName}" keyType="@{keyType}"
+                       package="heap" prefix="Heap" suffix="G"/>
 
       <!-- Nested generation of KeyValue types -->
       <generateKeyValueTypes keyName="@{keyName}" keyType="@{keyType}"
