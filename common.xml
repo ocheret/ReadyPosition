@@ -74,6 +74,10 @@
           <include name="**/test/*.class"/>
           <exclude name="${internal.excludeFromTests}"/>
         </fileset>
+        <fileset dir="${gen.dir}">
+          <include name="**/test/*.class"/>
+          <exclude name="${internal.excludeFromTests}"/>
+        </fileset>
       </batchtest>
     </junit>
     <fail message="Not all JUnit Tests Passed" if="junit.failed"/>

@@ -1,6 +1,6 @@
 // _Warning_
 
-package com.readyposition.collections.vector;
+package com.readyposition.collections.vector.test;
 
 import java.util.Random;
 
@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.readyposition.collections.comparator.*;
 import com.readyposition.collections.common.*;
+import com.readyposition.collections.vector.Vector_ValueName_;
 
 /** Unit tests for heaps. */
 public class Vector_ValueName_Test

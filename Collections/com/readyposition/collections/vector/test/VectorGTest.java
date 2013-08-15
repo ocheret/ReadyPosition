@@ -1,4 +1,4 @@
-package com.readyposition.collections.vector;
+package com.readyposition.collections.vector.test;
 
 import java.util.Random;
 
@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.readyposition.collections.comparator.*;
 import com.readyposition.collections.common.Types;
+import com.readyposition.collections.vector.VectorG;
 
 /** Unit tests for heaps. */
 public class VectorGTest
