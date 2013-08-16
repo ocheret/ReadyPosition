@@ -126,7 +126,7 @@ public class Ascii
     public final static byte SP = 0x20;
 
     /** DEL character. */
-    public final static byte DEL = 0x1f;
+    public final static byte DEL = 0x7f;
 
     /** Hex characters used for formatting bytes. */
     private final static char[] s_hex = {
