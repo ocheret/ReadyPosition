@@ -52,6 +52,7 @@
     <javac includeantruntime="false" destdir="${classes.dir}">
       <src location="${src.dir}"/>
       <src location="${gen.dir}"/>
+      <exclude name="**/tmp/**"/>
       <classpath refid="classpath"/>
     </javac>
   </target>

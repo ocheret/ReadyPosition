@@ -6,7 +6,11 @@
     <attribute name="target"/>
     <sequential>
       <subant target="@{target}">
-        <fileset dir="." includes="*/build.xml"/>
+        <!-- <fileset dir="." includes="*/build.xml"/> -->
+        <filelist dir=".">
+          <file name="Collections/build.xml"/>
+          <file name="Reactor/build.xml"/>
+        </filelist>
       </subant>
     </sequential>
   </macrodef>
@@ -41,6 +45,7 @@
       <sourcepath location="Collections"/>
       <!-- XXX - This path should probably be in a variable. -->
       <sourcepath location="${build.dir}/Collections/generated"/>
+      <!-- XXX - figure out a way to exclude test directories. -->
       <package name="com.readyposition.*"/>
       <classpath>
         <fileset dir="ThirdParty">
