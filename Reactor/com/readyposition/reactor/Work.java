@@ -10,7 +10,7 @@ public abstract class Work
 {
     /**
      * The WorkHandler that will be invoked the next time through the
-     * main loop.
+     * reactor loop.
      */
     protected WorkHandler m_handler;
 
@@ -27,10 +27,10 @@ public abstract class Work
     protected Work() {}
 
     /**
-     * Constructrs a work that will run the next time through the main loop.
+     * Constructrs a work that will run the next time through the reactor loop.
      *
      * @param handler the WorkHandler that will be invoked the next
-     *	      time through the main loop.
+     *	      time through the reactor loop.
      */
     protected Work(WorkHandler handler) {
         m_handler = handler;

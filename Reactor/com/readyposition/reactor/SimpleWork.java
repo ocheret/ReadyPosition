@@ -20,10 +20,10 @@ public class SimpleWork extends Work {
     protected SimpleWork() {}
 
     /**
-     * Constructrs a work that will run the next time through the main loop.
+     * Constructrs a work that will run the next time through the reactor loop.
      *
      * @param handler the WorkHandler that will be invoked the
-     *        next time through the main loop.
+     *        next time through the reactor loop.
      */
     protected SimpleWork(WorkHandler handler) {
         m_handler = handler;

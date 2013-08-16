@@ -6,7 +6,7 @@ import com.readyposition.collections.list.Yoke;
 
 /**
  * An abstract superclass for all types of tasks that can be handed to
- * the executive loops (e.g. Valves, Timers, Works).
+ * the reactor loop (e.g. Valves, Timers, Works).
  */
 public abstract class Task<T extends Task<T>> extends Yoke<T>
 {
@@ -19,7 +19,7 @@ public abstract class Task<T extends Task<T>> extends Yoke<T>
     /** Canceled state. */
     protected final static int STATE_CANCELED = 3;
 
-    /** The state of this loop task. */
+    /** The state of this reactor task. */
     protected AtomicInteger m_state = new AtomicInteger(STATE_PENDING);
 
     /**
