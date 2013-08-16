@@ -7,14 +7,14 @@ package com.readyposition.collections.comparator;
  * what can be done with an order by statement in SQL (e.g. order by
  * price asc, size desc).
  */
-public class CmpMulti implements CmpG<Object> {
+public class CmpMulti<T> implements CmpG<T> {
     /**
      * Constructor.
      * 
-     * @param cmps an array of CmpG<Object> objects in the order that
-     *            they should be applied to compare Objects.
+     * @param cmps an array of CmpG<T> objects in the order that
+     *            they should be applied to compare Objects of class T.
      */
-    public CmpMulti(CmpG<Object>[] cmps) {
+    public CmpMulti(CmpG<T>[] cmps) {
         if (cmps == null) {
             throw new IllegalArgumentException("Comparator arrays is null");
         }
@@ -22,9 +22,9 @@ public class CmpMulti implements CmpG<Object> {
     }
 
     /**
-     * Compares two Objects using elements of the comparators array in
-     * order.  Comparisons are shortcutted as soon as a difference is
-     * found.
+     * Compares two Objects of class T using elements of the
+     * comparators array in order.  Comparisons are shortcutted as
+     * soon as a difference is found.
      * 
      * @param a the first Object to be compared.
      * @param b the second Object to be compared.
@@ -32,7 +32,7 @@ public class CmpMulti implements CmpG<Object> {
      *         first argument is less than, equal to, or greater than
      *         the second.
      */
-    public int compare(Object a, Object b) {
+    public int compare(T a, T b) {
         int n = m_cmps.length;
         for (int i = 0; i < n; i++) {
             int s = m_cmps[i].compare(a, b);
@@ -44,5 +44,5 @@ public class CmpMulti implements CmpG<Object> {
     }
 
     /** The array of comparators to apply in order when comparing objects. */
-    protected CmpG<Object>[] m_cmps;
+    protected CmpG<T>[] m_cmps;
 }
