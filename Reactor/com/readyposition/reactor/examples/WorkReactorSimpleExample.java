@@ -79,17 +79,17 @@ public class WorkReactorSimpleExample {
 
     /** The main event. */
     public static void main(String[] args) {
-        WorkReactorSimpleExample wle = new WorkReactorSimpleExample();
-        wle.submitWork();
+        WorkReactorSimpleExample reactor = new WorkReactorSimpleExample();
+        reactor.submitWork();
         for (;;) {
             try {
-                wle.getWorkReactor().getThread().join();
+                reactor.getWorkReactor().getThread().join();
                 break;
             } catch (InterruptedException e) {
             }
         }
         s_logger.info("WorkReactor has terminated: cycle count = " +
-                      wle.getWorkReactor().getCycleCount());
+                      reactor.getWorkReactor().getCycleCount());
         System.exit(0);
     }
 }

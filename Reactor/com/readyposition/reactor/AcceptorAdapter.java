@@ -121,7 +121,7 @@ public abstract class AcceptorAdapter implements AcceptorListener {
 
     // Javadoc from interface
     public void listening() {
-        s_logger.info("Acceptor " + m_name + " listening.");
+        s_logger.info("Acceptor " + m_name + " listening on port " + m_port + ".");
         m_backOff = null;
     }
 
