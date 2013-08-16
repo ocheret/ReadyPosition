@@ -106,12 +106,12 @@ public abstract class Timer
         m_time = time;
     }
 
-    /** TODO - javadoc */
+    /** XXX - javadoc */
     public void setEntry(int entry) {
         m_entry = entry;
     }
 
-    /** TODO - javadoc */
+    /** XXX - javadoc */
     public int getEntry() {
         return m_entry;
     }

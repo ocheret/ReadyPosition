@@ -227,7 +227,7 @@ public class TimerReactor extends WorkReactor
         return m_sleepTime;
     }
 
-    /** TODO - javadoc */
+    /** XXX - javadoc */
     protected void doWork() {
         if (m_sleepTime >= 0) {
             // Compile a queue of timers that are ripe.

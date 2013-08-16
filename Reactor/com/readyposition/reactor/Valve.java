@@ -41,7 +41,7 @@ public class Valve implements ValveHandler
         m_handler = handler;
     }
 
-    /** TODO - javadoc */
+    /** XXX - javadoc */
     public void enable(int ops) {
         if (m_ioReactor == null) {
             throw new IllegalStateException("Attempt to enable operations on an unregistered Valve.");

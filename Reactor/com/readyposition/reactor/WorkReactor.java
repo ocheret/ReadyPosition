@@ -32,7 +32,7 @@ public class WorkReactor implements Runnable
     protected boolean m_isWorkToDo;
 
     /**
-     * The number of passes through the main loop. Allowed to wrap. Useful for
+     * The number of passes through the reactor loop. Allowed to wrap. Useful for
      * debugging.
      */
     protected long m_cycleCount;
@@ -57,9 +57,9 @@ public class WorkReactor implements Runnable
      * @return a WorkReactor instance.
      */
     public static WorkReactor getWorkReactor() {
-        WorkReactor loop = new WorkReactor();
-        loop.m_thread.start();
-        return loop;
+        WorkReactor reactor = new WorkReactor();
+        reactor.m_thread.start();
+        return reactor;
     }
 
     /**
@@ -68,9 +68,9 @@ public class WorkReactor implements Runnable
      * @return a WorkReactor instance.
      */
     public static WorkReactor getWorkReactor(String name) {
-        WorkReactor loop = new WorkReactor(name);
-        loop.m_thread.start();
-        return loop;
+        WorkReactor reactor = new WorkReactor(name);
+        reactor.m_thread.start();
+        return reactor;
     }
 
     /**
@@ -96,9 +96,9 @@ public class WorkReactor implements Runnable
     }
 
     /**
-     * Gets the Thread for this loop.
+     * Gets the Thread for this reactor.
      *
-     * @return the Thread for this loop.
+     * @return the Thread for this reactor.
      */
     public Thread getThread() {
         return m_thread;
@@ -106,7 +106,7 @@ public class WorkReactor implements Runnable
 
     /**
      * Creates a Work that will be invoked the next time through the
-     * main loop.
+     * reactor loop.
      *
      * @param handler the WorkHandler that will be invoked the next
      *                time through the loop.
@@ -151,12 +151,12 @@ public class WorkReactor implements Runnable
         }
     }
 
-    /** Retrieves the number of cycles the main loops has executed. */
+    /** Retrieves the number of cycles the reactor loop has executed. */
     public long getCycleCount() {
         return m_cycleCount;
     }
 
-    /** TODO - javadoc */
+    /** XXX - javadoc */
     protected synchronized void waitForWork() {
         // While there is nothing in the work queue
         while (!isWorkPending()) {
@@ -178,7 +178,7 @@ public class WorkReactor implements Runnable
         return m_isWorkToDo;
     }
 
-    /** Perform any work that the loop needs to do. */
+    /** Perform any work that the reactor needs to do. */
     protected void doWork() {
         if (!m_isWorkToDo) {
             // Shortcut if there is trivially nothing to do.
@@ -232,21 +232,21 @@ public class WorkReactor implements Runnable
                         work.setToPending();
                     }
                 } catch (Throwable t) {
-                    // TODO - we need some sort of callback so that we can deal
+                    // XXX - we need some sort of callback so that we can deal
                     // with a failed Work, no?
                     s_logger.warn(t.toString(), t);
                 }
             }
     }
 
-    /** Ensures that the loop notices newly registered work. */
+    /** Ensures that the reactor notices newly registered work. */
     protected synchronized void wakeup() {
         notify();
     }
 
     /** Instructs the WorkReactor to stop running in the near future. */
     public void shutdown() {
-        // Register a Work that will tell the main loop to stop running.
+        // Register a Work that will tell the reactor loop to stop running.
         workSubmit(new Work() {
                 public boolean workFire() {
                     m_done = true;
