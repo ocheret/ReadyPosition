@@ -43,6 +43,7 @@
   <target name="javadoc" depends="generate">
     <javadoc destdir="${javadoc.dir}" windowtitle="ReadyPosition API">
       <sourcepath location="Collections"/>
+      <sourcepath location="Reactor"/>
       <!-- XXX - This path should probably be in a variable. -->
       <sourcepath location="${build.dir}/Collections/generated"/>
       <!-- XXX - figure out a way to exclude test directories. -->

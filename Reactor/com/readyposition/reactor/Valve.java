@@ -138,8 +138,7 @@ public class Valve implements ValveHandler
      * (much like Thread can be either be subclassed with run()
      * overridden or it can be provided a Runnable).
      *
-     * @param reactor the IOReactor controlling this Valve.
-     * @param channel the SelectableChannel that is ready for I/O.
+     * @param valve the Valve that is ready for I/O.
      * @param selectedKey a SelectionKey that tells us what I/O
      *                    operations are pending.
      */

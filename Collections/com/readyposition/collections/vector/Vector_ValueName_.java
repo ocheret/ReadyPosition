@@ -139,7 +139,7 @@ public class Vector_ValueName_ {
     /**
      * Sets all entries to a specified value.
      *
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void fill(_ValueType_ value) {
         fill(0, m_used, value);
@@ -150,7 +150,7 @@ public class Vector_ValueName_ {
      *
      * @param start the first entry whose value we want to set.
      * @param end one past the last entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void fill(int start, int end, _ValueType_ value) {
         if (start > m_used) {
@@ -233,7 +233,7 @@ public class Vector_ValueName_ {
      * subsequent values to lower indices to fill the gap.
      *
      * @param index the index of the start of the span of values to remove.
-     * @param the number of values in the span to remove.
+     * @param length the number of values in the span to remove.
      */
     public void remove(int index, int length) {
         if (index < 0 || index >= m_used) {
@@ -304,10 +304,9 @@ public class Vector_ValueName_ {
     }
 
     /**
-     * Sorts all values in the vector in some order using a provided comparator.
+     * Sorts all values in the vector in some order using a provided
+     * comparator.
      *
-     * @param start the start of the span of values (inclusive).
-     * @param end the end of the span of values (exclusive).
      * @param cmp the comparator used to compare values.
      */
     public void sort(Cmp_ValueName_ cmp) {
@@ -392,7 +391,6 @@ public class Vector_ValueName_ {
      * value using a default equialence tester.
      *
      * @param value value to search for
-     * @param eq the equivalence tester to use
      * @return the first offset of the value, or -1 if it is not in
      * the vector
      */
@@ -535,7 +533,7 @@ public class Vector_ValueName_ {
      * Modifies the value for a specified entry.
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void set(int index, _ValueType_ value) {
         if (index >= m_used) {
@@ -548,7 +546,7 @@ public class Vector_ValueName_ {
      * Modifies the value for a specified entry without bounds checking.
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void setQuick(int index, _ValueType_ value) {
         m_values[index] = value;
@@ -588,7 +586,7 @@ public class Vector_ValueName_ {
      * initialized to a default missing value (0 or null).
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void put(int index, _ValueType_ value) {
         put(index, value, Types.get_ValueName_For(0));
@@ -601,7 +599,7 @@ public class Vector_ValueName_ {
      * initialized to a specified missing value.
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      * @param missingValue the value to initialize new allocated entries to.
      */
     public void put(int index, _ValueType_ value, _ValueType_ missingValue) {

@@ -137,7 +137,7 @@ public class VectorG<T> {
     /**
      * Sets all entries to a specified value.
      *
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void fill(T value) {
         fill(0, m_used, value);
@@ -148,7 +148,7 @@ public class VectorG<T> {
      *
      * @param start the first entry whose value we want to set.
      * @param end one past the last entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void fill(int start, int end, T value) {
         if (start > m_used) {
@@ -230,7 +230,7 @@ public class VectorG<T> {
      * to lower indices to fill the gap.
      *
      * @param index the index of the start of the span of values to remove.
-     * @param the number of values in the span to remove.
+     * @param length the number of values in the span to remove.
      */
     public void remove(int index, int length) {
         if (index < 0 || index >= m_used) {
@@ -300,10 +300,9 @@ public class VectorG<T> {
     }
 
     /**
-     * Sorts all values in the vector in some order using a provided comparator.
+     * Sorts all values in the vector in some order using a provided
+     * comparator.
      *
-     * @param start the start of the span of values (inclusive).
-     * @param end the end of the span of values (exclusive).
      * @param cmp the comparator used to compare values.
      */
     public void sort(CmpG<Object> cmp) {
@@ -387,7 +386,6 @@ public class VectorG<T> {
      * value using a default equialence tester.
      *
      * @param value value to search for
-     * @param eq the equivalence tester to use
      * @return the first offset of the value, or -1 if it is not in
      *         the vector
      */
@@ -532,7 +530,7 @@ public class VectorG<T> {
      * Modifies the value for a specified entry.
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void set(int index, T value) {
         if (index >= m_used) {
@@ -545,7 +543,7 @@ public class VectorG<T> {
      * Modifies the value for a specified entry without bounds checking.
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void setQuick(int index, T value) {
         m_values[index] = value;
@@ -586,7 +584,7 @@ public class VectorG<T> {
      * initialized to a default missing value (0 or null).
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      */
     public void put(int index, T value) {
         put(index, value, null);
@@ -599,7 +597,7 @@ public class VectorG<T> {
      * initialized to a specified missing value.
      *
      * @param index the entry whose value we want to set.
-     * @param newValue the new value for this entry.
+     * @param value the new value for this entry.
      * @param missingValue the value to initialize new allocated entries to.
      */
     public void put(int index, T value, T missingValue) {
