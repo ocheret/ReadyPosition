@@ -1,0 +1,298 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This should be machine generated!  I'm tired of editing this stuff
+// by hand
+
+package com.readyposition.utils.hash;
+
+import com.readyposition.utils.Hash;
+import com.readyposition.utils.Functions;
+import com.readyposition.utils.comparator.@KEY_NAME@Eq;
+import com.readyposition.utils.comparator.Comparators;
+import com.readyposition.utils.itemizer.@KEY_NAME@KeyItemizer;
+
+import java.util.ConcurrentModificationException;
+
+/**
+ * @KEY_NAME@AbstractHash is intended to be subclassed to build efficient
+ * array oriented hash tables and hash sets with @KEY_TYPE@ keys
+ * and arbitrarily typed values (including primitive types).
+ * <p>
+ * Keys, values, and other internal information are maintained in
+ * parallel arrays.  It is up to subclasses to manage storage and
+ * access to the value array by implementing the growValues and
+ * removeValue abstract methods.
+ */
+public abstract class @KEY_NAME@AbstractHash extends AbstractHash
+{
+    /**
+     * Constructs an empty @KEY_NAME@AbstractHash with the specified inital
+     * capacity and load factor.
+     *
+     * @param initialCapacity the initial capacity.
+     * @param loadFactor the load factor.
+     */
+    protected @KEY_NAME@AbstractHash(int initialCapacity, float loadFactor)
+    {
+	super(initialCapacity, loadFactor);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@AbstractHash with the specified inital
+     * capacity and the default load factor (0.75)
+     *
+     * @param initialCapacity the initial capacity.
+     */
+    protected @KEY_NAME@AbstractHash(int initialCapacity)
+    {
+	super(initialCapacity);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@AbstractHash with default capacity (11)
+     * and the default load factor (0.75)
+     */
+    protected @KEY_NAME@AbstractHash()
+    {
+	super();
+    }
+
+    /**
+     * Grow the keys array.  All keys are copied to the expanded array.
+     *
+     * @param size the new size of the keys array.
+     */
+    protected void growKeys(int size)
+    {
+	@KEY_TYPE@[] newKeys = new @KEY_TYPE@[size];
+	if (m_keys != null)
+	    System.arraycopy(m_keys, 0, newKeys, 0, m_keys.length);
+	m_keys = newKeys;
+    }
+
+    /** Clears the keys array. */
+    protected void clearKeys()
+    {
+	// Simply replace the array with a new array of the same length.
+	m_keys = new @KEY_TYPE@[m_keys.length];
+    }
+
+    /** Array holding the keys to the kingdom. */
+    protected @KEY_TYPE@[] m_keys;
+
+    /** Comparator for keys. */
+    protected @KEY_NAME@Eq m_eq = Comparators.@KEY_EQ@_ASC;
+
+    /** Sets the comparator for keys. */
+    public void setEq(@KEY_NAME@Eq eq)
+    {
+	if (eq == null)
+	    throw new IllegalArgumentException("Null @KEY_NAME@Eq");
+	m_eq = eq;
+    }
+
+    /** Gets the comparator for keys. */
+    public @KEY_NAME@Eq getEq()
+    {
+	return m_eq;
+    }
+
+    /**
+     * Retrieves all of the keys in the table.  This array is parallel
+     * to the one returned by getEntries in the superclass.
+     * Subclasses should provide appropriately typed getValues methods
+     * that will return arrays parallel to the one returned here.
+     *
+     * @return an array of integer entries.
+     */
+    public @KEY_TYPE@[] getKeys()
+    {
+	@KEY_TYPE@[] theKeys = new @KEY_TYPE@[m_size];
+	int count = 0;
+	for (int bucket = 0; bucket < m_buckets.length; bucket++)
+	    for (int i = m_buckets[bucket]; i != -1; i = m_next[i])
+		theKeys[count++] = m_keys[i];
+	return theKeys;
+    }
+
+    /**
+     * Interns a key in the table.  If the key is already interned
+     * in the table, then the existing entry is retrieved.
+     *
+     * @param key the key to intern in the table.
+     * @return the entry in which the key is interned.
+     */
+    protected int intern(@KEY_TYPE@ key)
+    {
+	m_modCount++;
+	int bucket = computeBucket(key);
+	for (int i = m_buckets[bucket]; -1 != i; i = m_next[i]) {
+	    if (m_eq.equals(key, m_keys[i]))
+		// This entry already exists
+		return i;
+	}
+
+	// If we're here we are adding a new entry
+
+	if (m_size >= m_threshold) {
+	    // Time to increase the number of buckets
+	    rehash();
+	    bucket = computeBucket(key);
+	}
+
+	int entry;
+	if (-1 != m_firstFree) {
+	    // There are entries on the free list to use
+	    entry = m_firstFree;
+	    m_firstFree = m_next[entry];
+	} else
+	    // No free entries - append new element
+	    entry = m_nextUnused++;
+	m_keys[entry] = key;
+	m_next[entry] = m_buckets[bucket];
+
+	// Complete the insertion of new entry into the bucket's list
+	m_buckets[bucket] = entry;
+	m_size++;
+
+	return entry;
+    }
+
+    /**
+     * Searches for a key's entry in the table.
+     *
+     * @param key the key to look for in the table.
+     * @return the entry number of the key or -1 if the key is not in
+     *	the table.
+     */
+    public int getEntry(@KEY_TYPE@ key) {
+	int bucket = computeBucket(key);
+	for (int i = m_buckets[bucket]; -1 != i; i = m_next[i])
+	    if (m_eq.equals(key, m_keys[i]))
+		return i;
+	return -1;
+    }
+
+    /**
+     * Retrieves an entry's key.
+     *
+     * @param entry the entry whose key we want to retrieve.
+     * @return the key associated with the entry.
+     */
+    public @KEY_TYPE@ getKey(int entry) {
+	return m_keys[entry];
+    }
+
+    /**
+     * Returns true if this table contains a mapping for the specified key.
+     *
+     * @param key the key whose presence in this table is to be tested.
+     * @return true if this table contains the specified key, false otherwise.
+     */
+    public boolean containsKey(@KEY_TYPE@ key) {
+	return -1 != getEntry(key);
+    }
+
+    /**
+     * Removes any mapping for the specified key.
+     *
+     * @param key the key whose mapping is to be removed from the table.
+     */
+    public void remove(@KEY_TYPE@ key) {
+	m_modCount++;
+	int bucket = computeBucket(key);
+	int prev = -1;
+	for (int i = m_buckets[bucket]; -1 != i; prev = i, i = m_next[i]) {
+	    if (!m_eq.equals(key, m_keys[i]))
+		continue;
+
+	    int n = m_next[i];
+	    if (-1 == prev)
+		// Head of list
+		m_buckets[bucket] = n;
+	    else
+		// Not the head of the list
+		m_next[prev] = n;
+
+	    m_next[i] = m_firstFree;
+	    m_firstFree = i;
+	    m_size--;
+	    removeValue(i);
+	    return;
+	}
+    }
+
+    /**
+     * Removes an entry from the table.
+     *
+     * @param entry the entry to remove from the table.
+     */
+    public void removeEntry(int entry) {
+	remove(m_keys[entry]);
+    }
+
+    /**
+     * Computes the hash bucket for a key.
+     *
+     * @param key the key to map to a bucket.
+     * @return the bucket into which the key hashes.
+     */
+    private int computeBucket(@KEY_TYPE@ key) {
+	int code = Hash.supp(Hash.code(key)) & Integer.MAX_VALUE;
+	int bucket = code % m_buckets.length;
+	return bucket;
+    }
+
+    /**
+     * Grows the hash table and reassigns all of the entries to new buckets.
+     */
+    private void rehash() {
+	int oldCapacity = m_buckets.length;
+
+	int newCapacity = Functions.lengthToSize(2 * oldCapacity);
+
+	m_threshold = 1 + (int)(newCapacity * m_loadFactor);
+
+	int[] oldBuckets = m_buckets;
+	@KEY_TYPE@[] oldKeys = m_keys;
+	int[] oldIndex = m_next;
+	m_buckets = new int[newCapacity];
+	m_keys = new @KEY_TYPE@[m_threshold];
+	m_next = new int[m_threshold];
+	System.arraycopy(oldKeys, 0, m_keys, 0, oldKeys.length);
+	System.arraycopy(oldIndex, 0, m_next, 0, oldIndex.length);
+	growValues(m_threshold);
+
+	for (int i = 0; i < newCapacity; i++)
+	    m_buckets[i] = -1;
+
+	for (int i = 0; i < oldCapacity; i++) {
+	    int index = oldBuckets[i];
+	    while (-1 != index) {
+		int bucket = computeBucket(oldKeys[index]);
+		int n = oldIndex[index];
+		m_next[index] = m_buckets[bucket];
+		m_buckets[bucket] = index;
+		index = n;
+	    }
+	}
+    }
+
+    /** Class for iterating through a hash table. */
+    protected class Itemizer
+	extends AbstractHash.Itemizer
+	implements @KEY_NAME@KeyItemizer
+    {
+	/** Gets the current key. */
+	public @KEY_TYPE@ key() {
+	    return m_keys[entry()];
+	}
+    }
+}

@@ -1,0 +1,23 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This file should be machine generated!  Use Velocity and/or Ant.
+
+package com.readyposition.utils.itemizer;
+
+/**
+ * XXX
+ */
+public interface @KEY_NAME@KeyItemizer extends EntryItemizer {
+    /** Advances to the next entry in the iteration. */
+    public void next();
+
+    /** Returns the current key in the iteration. */
+    public @KEY_TYPE@ key();
+}

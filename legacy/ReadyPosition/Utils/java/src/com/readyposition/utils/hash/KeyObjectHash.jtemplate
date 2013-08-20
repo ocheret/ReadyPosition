@@ -1,0 +1,186 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This should be machine generated!  I'm tired of editing this stuff
+// by hand
+
+package com.readyposition.utils.hash;
+
+import com.readyposition.utils.itemizer.@KEY_NAME@ObjectItemizer;
+
+import java.lang.reflect.Array;
+
+/**
+ * @KEY_NAME@ObjectHash is an efficient array oriented hash table
+ * with @KEY_TYPE@ keys and Object values.
+ */
+public class @KEY_NAME@ObjectHash extends @KEY_NAME@AbstractHash
+{
+    /**
+     * Constructs an empty @KEY_NAME@ObjectHash with the specified inital
+     * capacity and load factor.
+     *
+     * @param initialCapacity the initial capacity.
+     * @param loadFactor the load factor.
+     */
+    public @KEY_NAME@ObjectHash(int initialCapacity, float loadFactor) {
+	super(initialCapacity, loadFactor);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@ObjectHash with the specified inital
+     * capacity and the default load factor (0.75)
+     *
+     * @param initialCapacity the initial capacity.
+     */
+    public @KEY_NAME@ObjectHash(int initialCapacity) {
+	super(initialCapacity);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@ObjectHash with default capacity (11)
+     * and the default load factor (0.75)
+     */
+    public @KEY_NAME@ObjectHash() {
+	super();
+    }
+
+    /**
+     * Array holding the values to be associated with keys.
+     */
+    protected Object[] m_values;
+
+    /**
+     * Associates a key with a value in the table.  If the table previously
+     * contained a mapping for this key, the old value is replaced.
+     *
+     * @param key key with which the value is to be associated.
+     * @param value the value to be associated with the specified key.
+     * @return the entry number for the key/value pair.
+     */
+    public int put(@KEY_TYPE@ key, Object value) {
+	int i = intern(key);
+	m_values[i] = value;
+	return i;
+    }
+
+    /**
+     * Replaces the value for a specified entry.
+     *
+     * @param entry the entry to receive a new value.
+     * @param value the new value for the entry.
+     */
+    public void putEntryValue(int entry, Object value) {
+	m_values[entry] = value;
+    }
+
+    /**
+     * Retrieves the value associated with a specified key.
+     *
+     * @param key the key whose associated value we want to retrieve.
+     * @return the value associated with the key or null if the key is
+     *	not mapped in the table.
+     */
+    public Object get(@KEY_TYPE@ key) {
+	int i = getEntry(key);
+	return (-1 == i) ? null : m_values[i];
+    }
+
+    /**
+     * Retrieves the value for a specified entry.
+     *
+     * @param entry the entry whose value we want to retrieve.
+     * @return the value of the specified entry.
+     */
+    public Object getEntryValue(int entry) {
+	return m_values[entry];
+    }
+
+    /**
+     * Retrieves all of the values in the table.  This array is parallel
+     * to the one returned by getEntries and getKeys in the superclass.
+     *
+     * @return an array of values.
+     */
+    public Object[] getValues() {
+	return getValues(null);
+    }
+
+    /**
+     * Retrieves all of the values in the table.  This array is parallel
+     * to the one returned by getEntries and getKeys in the superclass.
+     *
+     * @param dst the array into which the values are to be stored, if
+     *	it is big enough; otherwise, a new array of the same runtime
+     *	type is allocated for this purpose.  If the array is longer than needed
+     *  then the extra elements at the end of the array will be initialized
+     *  to null.  If dst is null, then an Object[] of the appropriate size
+     *  is returned.
+     * @return an array of values.
+     */
+    public Object[] getValues(Object[] dst) {
+	if (dst == null) {
+	    dst = new Object[m_size];
+	} else if (dst.length < m_size) {
+	    dst = (Object[])Array.newInstance(
+		dst.getClass().getComponentType(), m_size);
+	}
+	int count = 0;
+	for (int bucket = 0; bucket < m_buckets.length; bucket++)
+	    for (int i = m_buckets[bucket]; i != -1;
+		 i = m_next[i])
+		dst[count++] = m_values[i];
+	for (int i = dst.length - 1; i >= m_size; i--) {
+	    dst[i] = null;
+	}
+	return dst;
+    }
+
+    /** Retrives an itemizer for the hash table (like an iterator). */
+    public @KEY_NAME@ObjectItemizer itemizer() {
+	return new Itemizer();
+    }
+
+    /**
+     * Grow the values array.  All values are copied to the expanded array.
+     *
+     * @param size the new size of the values array.
+     */
+    protected void growValues(int size) {
+	Object[] newValues = new Object[size];
+	if (null != m_values)
+	    System.arraycopy(m_values, 0, newValues, 0, m_values.length);
+	m_values = newValues;
+    }
+
+    /** Clears the values array. */
+    protected void clearValues() {
+	// Simply replace the array with a new array of the same length.
+	m_values = new Object[m_values.length];
+    }
+
+    /**
+     * Clean up data for the value at a specified entry.
+     *
+     * @param entry the entry number of the value to clean up.
+     */
+    protected void removeValue(int entry) {
+	m_values[entry] = null;
+    }
+
+    /** The Itemizer class for this type of hash table. */
+    protected class Itemizer
+	extends @KEY_NAME@AbstractHash.Itemizer
+	implements @KEY_NAME@ObjectItemizer
+    {
+	public Object value() {
+	    return m_values[entry()];
+	}
+    }
+}

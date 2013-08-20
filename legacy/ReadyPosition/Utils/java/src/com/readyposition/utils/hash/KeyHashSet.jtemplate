@@ -1,0 +1,87 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This should be machine generated!  I'm tired of editing this stuff
+// by hand
+
+package com.readyposition.utils.hash;
+
+import com.readyposition.utils.itemizer.@KEY_NAME@KeyItemizer;
+
+/**
+ * Provides a hashed set with keys of type @KEY_TYPE@.
+ */
+public class @KEY_NAME@HashSet extends @KEY_NAME@AbstractHash
+{
+    /**
+     * Constructs an empty @KEY_NAME@HashSet with the specified inital
+     * capacity and load factor.
+     *
+     * @param initialCapacity the initial capacity.
+     * @param loadFactor the load factor.
+     */
+    public @KEY_NAME@HashSet(int initialCapacity, float loadFactor) {
+	super(initialCapacity, loadFactor);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@HashSet with the specified inital
+     * capacity and the default load factor (0.75)
+     *
+     * @param initialCapacity the initial capacity.
+     */
+    public @KEY_NAME@HashSet(int initialCapacity) {
+	super(initialCapacity);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@HashSet with default capacity (11)
+     * and the default load factor (0.75)
+     */
+    public @KEY_NAME@HashSet() {
+	super();
+    }
+
+    /**
+     * Adds a key to the set.  If the table previously contained a
+     * mapping for this key, no new entry is added.
+     *
+     * @param key key to be added to the set.
+     * @return the entry number for the key/value pair.
+     */
+    public int add(@KEY_TYPE@ key) {
+	return this.intern(key);
+    }
+
+    /**
+     * Grow the values array.  All values are copied to the expanded array.
+     *
+     * @param size the new size of the values array.
+     */
+    protected void growValues(int size) {}
+
+    /**
+     * Clears the values array.
+     */
+    protected void clearValues() {};
+
+    /**
+     * Clean up data for the value at a specified index.
+     *
+     * @param entry the entry number of the value to clean up.
+     */
+    protected void removeValue(int entry) {}
+
+    /**
+     * Retrives an itemizer for the hash table (like an iterator).
+     */
+    public @KEY_NAME@KeyItemizer itemizer() {
+	return new Itemizer();
+    }
+}

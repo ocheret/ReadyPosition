@@ -1,0 +1,182 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+package com.readyposition.utils.tree;
+
+import com.readyposition.utils.itemizer.@KEY_NAME@@VALUE_NAME@Itemizer;
+
+/**
+ * @KEY_NAME@@VALUE_NAME@Tree is an efficient array oriented tree map
+ * with @KEY_TYPE@ keys and @VALUE_TYPE@ values.
+ */
+public class @KEY_NAME@@VALUE_NAME@Tree extends @KEY_NAME@AbstractTree {
+    /**
+     * Constructs an empty @KEY_NAME@@VALUE_NAME@Tree with the
+     * specified initial capacity and growth factor.
+     *
+     * @param initialCapacity the number of entries the tree is
+     *  initially allocated to hold.
+     * @param growthFactor the factor by which to increase the tree size
+     *  when it needs to expand.
+     */
+    protected @KEY_NAME@@VALUE_NAME@Tree(int initialCapacity,
+      float growthFactor)
+    {
+	super(initialCapacity, growthFactor);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@@VALUE_NAME@Tree with the
+     * specified initial capacity and a default growth factor of 2.
+     *
+     * @param initialCapacity the number of entries the tree is
+     *  initially allocated to hold.
+     */
+    protected @KEY_NAME@@VALUE_NAME@Tree(int initialCapacity) {
+	super(initialCapacity);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@@VALUE_NAME@Tree with a default initial
+     * capacity of 16 and a default growth factor of 2.
+     */
+    protected @KEY_NAME@@VALUE_NAME@Tree() {
+	super();
+    }
+
+    /**
+     * The array that holds the values.
+     */
+    protected @VALUE_TYPE@[] m_values;
+
+    /**
+     * Associates a key with a value in the tree.  If the tree previously
+     * contained a mapping for this key, the old value is replaced.
+     *
+     * @param key key with which the value is to be associated.
+     * @param value the value to be associated with the specified key.
+     * @return the entry number for the key/value pair.
+     */
+    public int put(@KEY_TYPE@ key, @VALUE_TYPE@ value) {
+	int i = intern(key);
+	m_values[i] = value;
+	return i;
+    }
+
+    /**
+     * Retrieves the value associated with a specified key.
+     *
+     * @param key the key whose associated value we want to retrieve.
+     * @return the value associated with the key.
+     */
+    public @VALUE_TYPE@ get(@KEY_TYPE@ key) {
+	int i = getEntry(key);
+	if (i == -1)
+	    throw new IndexOutOfBoundsException("No such key " + key);
+	return m_values[i];
+    }
+
+    /**
+     * Retrieves the value for a specified entry.
+     *
+     * @param entry the entry whose value we want to retrieve.
+     * @return the value of the specified entry.
+     */
+    public @VALUE_TYPE@ getEntryValue(int entry) {
+	return m_values[entry];
+    }
+
+    /**
+     * Retrieves an array of all of the values in the tree 'in key order'.
+     *
+     * @return an array of values 'in key order'.
+     */
+    public @VALUE_TYPE@[] getValues() {
+	@VALUE_TYPE@[] values = new @VALUE_TYPE@[m_size];
+	int count = 0;
+	count = getTreeValues(values, count, m_root);
+	return values;
+    }
+
+    /**
+     * Fills in an array of values 'in key order' for a subtree of the tree.
+     *
+     * @param values an array of values to be filled in.
+     * @param count the index in the values array at which to start filling.
+     * @param entry the root of the subtree whose values are to be retrieved.
+     * @return the number of values currently filled in in the values array.
+     */
+    protected int getTreeValues(@VALUE_TYPE@[] values, int count, int entry) {
+	if (entry == -1)
+	    return count;
+	count = getTreeValues(values, count, m_left[entry]);
+	values[count++] = m_values[entry];
+	return getTreeValues(values, count, m_right[entry]);
+    }
+
+    /**
+     * Clears the array of values to an initial state.
+     */
+    protected void clearValues() {
+	m_values = new @VALUE_TYPE@[m_initialCapacity];
+    }
+
+    /**
+     * Grow the values array.  All values are copied to the expanded array.
+     *
+     * @param size the new size of the values array.
+     */
+    protected void growValues(int size) {
+	@VALUE_TYPE@[] newValues = new @VALUE_TYPE@[size];
+	if (m_values != null)
+	    System.arraycopy(m_values, 0, newValues, 0, m_values.length);
+	m_values = newValues;
+    }
+
+    /**
+     * Clean up data for the value at a specified entry.
+     *
+     * @param entry the entry number of the value to clean up.
+     */
+    protected void removeValue(int entry) {}
+
+    /**
+     * Invoked to reinsert entries into the tree after the comparator
+     * has been changed.
+     */
+    protected void reinsert() {
+	int[] entries = getEntries();
+	@KEY_TYPE@[] keys = m_key;
+	@VALUE_TYPE@[] values	= m_values;
+	clear();
+	for (int i = 0; i < entries.length; i++) {
+	    int j = entries[i];
+	    put(keys[j], values[j]);
+	}
+    }
+
+    /**
+     * Retrives an itemizer for the tree (like an Iterator).
+     */
+    public @KEY_NAME@@VALUE_NAME@Itemizer itemizer() {
+	return new Itemizer();
+    }
+
+    /**
+     * The Itemizer class for this type of tree.
+     */
+    protected class Itemizer
+	extends @KEY_NAME@AbstractTree.Itemizer
+	implements @KEY_NAME@@VALUE_NAME@Itemizer
+    {
+	public @VALUE_TYPE@ value() {
+	    return m_values[entry()];
+	}
+    }
+}

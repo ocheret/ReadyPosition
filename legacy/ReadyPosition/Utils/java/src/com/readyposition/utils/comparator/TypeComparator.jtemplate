@@ -1,0 +1,20 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - Figure out how to generate this code.
+
+package com.readyposition.utils.comparator;
+
+/**
+ * Interface that allow comparison of two objects of type @VALUE_TYPE@.
+ */
+public interface @VALUE_NAME@Comparator
+    extends @VALUE_NAME@Eq, @VALUE_NAME@Cmp
+{
+}

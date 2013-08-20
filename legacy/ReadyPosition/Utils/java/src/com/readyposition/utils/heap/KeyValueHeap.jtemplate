@@ -1,0 +1,109 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This file should be machine generated!  Use Velocity and/or Ant.
+
+package com.readyposition.utils.heap;
+
+/**
+ * @KEY_NAME@@VALUE_NAME@Heap is intended to be subclassed to build
+ * efficient array oriented heaps with @KEY_TYPE@ keys and @VALUE_TYPE@
+ * values.
+ */
+public class @KEY_NAME@@VALUE_NAME@Heap extends @KEY_NAME@AbstractHeap
+{
+    /**
+     * Constructs a heap with @KEY_TYPE@ keys and @VALUE_TYPE@ values.
+     *
+     * @param initialCapacity the initial number of elements that can be
+     *        held in the heap.
+     * @param growthFactor factor used to grow internal arrays when the
+     *        heap needs to grow (e.g. 2.0f means to double array sizes).
+     */
+    public @KEY_NAME@@VALUE_NAME@Heap(int initialCapacity, float growthFactor)
+    {
+	super(initialCapacity, growthFactor);
+    }
+
+    /**
+     * Constructs a heap with @KEY_TYPE@ keys and @VALUE_TYPE@ values.
+     *
+     * @param initialCapacity the initial number of elements that can be
+     *        held in the heap.
+     */
+    public @KEY_NAME@@VALUE_NAME@Heap(int initialCapacity) {
+	super(initialCapacity);
+    }
+
+    /** Constructs a heap with @KEY_TYPE@ keys and @VALUE_TYPE@ values. */
+    public @KEY_NAME@@VALUE_NAME@Heap() {
+	super();
+    }
+
+    /** The array of values that parallels the m_keys array of keys. */
+    protected @VALUE_TYPE@[] m_values;
+
+    /**
+     * Inserts a new entry into the heap.
+     *
+     * @param key the key of the new element to insert.
+     * @param value the value of the new element to insert.
+     * @return the entry number of the new entry.  This number should be
+     *         used to refer to the key and value for this entry.
+     */
+    public int insert(@KEY_TYPE@ key, @VALUE_TYPE@ value) {
+	int i = insert(key);
+	m_values[i] = value;
+	return i;
+    }
+
+    /**
+     * Gets the value associated with an entry.
+     *
+     * @param entry the number of the entry whose value is to be retrieved.
+     * @return the value for the specified entry.
+     */
+    public @VALUE_TYPE@ getValue(int entry) { return m_values[entry]; }
+
+    /**
+     * Gets all of the values in the heap.
+     *
+     * @return an array of the values in the heap.  This array parallels
+     *         the arrays returned by getKeys() and getEntries().
+     */
+    public @VALUE_TYPE@[] getValues() {
+	@VALUE_TYPE@[] r = new @VALUE_TYPE@[m_size];
+	for (int i = 0; i < m_size; i++)
+	    r[i] = m_values[m_tree[i]];
+	return r;
+    }
+
+    /**
+     * Resizes the values array.
+     *
+     * @param size the new size for the values array.
+     */
+    protected void resizeValues(int size) {
+	if (size == 0) {
+	    m_values = null;
+	    return;
+	}
+	@VALUE_TYPE@[] newValues = new @VALUE_TYPE@[size];
+	if (m_values != null)
+	    System.arraycopy(m_values, 0, newValues, 0, m_values.length);
+	m_values = newValues;
+    }
+
+    /**
+     * Does nothing in this class.
+     *
+     * @param entry ignored.
+     */
+    protected void removeValue(int entry) {}
+}

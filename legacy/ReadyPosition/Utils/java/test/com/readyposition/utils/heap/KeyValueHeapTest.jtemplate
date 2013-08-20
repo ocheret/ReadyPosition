@@ -1,0 +1,256 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This file should be machine generated!  Use Velocity and/or Ant.
+
+package com.readyposition.utils.heap;
+
+import java.lang.Number.*;
+
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Random;
+
+import junit.framework.TestCase;
+
+public class @KEY_NAME@@VALUE_NAME@HeapTest extends TestCase
+{
+    private @KEY_NAME@@VALUE_NAME@Heap m_heap;
+    final private int m_iterations = 10000;
+    private int testSize;
+    // Used to keep track of MIN/MAX in the heap
+    private long randomSeed = 0xcafe;
+    private @KEY_TYPE@ testKeys[];
+
+    public void setUp() {
+	m_heap = new @KEY_NAME@@VALUE_NAME@Heap();
+	setupValues();
+    }
+
+    public void tearDown() {
+	m_heap = null;
+    }
+
+    private void setupValues() {
+	// Use a fixed random seed so we get the same
+	// sequence every test
+	Random rand = new Random(randomSeed);
+	testKeys = new @KEY_TYPE@[m_iterations];
+	testSize = m_iterations;
+	for (int i = 0; i < m_iterations; i++)
+	    {
+		@KEY_TYPE@ key = (@KEY_TYPE@) rand.nextInt();
+		m_heap.insert(key, (@VALUE_TYPE@) i);
+		testKeys[i] = key;
+	    }
+    }
+    
+    public void testClear() {
+	m_heap.clear();
+
+	// Make sure it's empty
+	assertEquals("Cleared heap has non-zero size", m_heap.getSize(), 0);
+
+	@KEY_TYPE@[] keys = m_heap.getKeys();
+	assertEquals("Cleared key array has non-zero length",
+		     keys.length, 0);
+	@VALUE_TYPE@[] values = m_heap.getValues();
+	assertEquals("Cleared value array has non-zero length",
+	  values.length, 0);
+	int[] entries = m_heap.getEntries();
+	assertEquals("Cleared entries array has non-zero length",
+		     entries.length, 0);
+
+    }
+
+    public void testKeyValueOrder() {
+	int entry = -1;
+	@KEY_TYPE@ key = -1L;
+	@VALUE_TYPE@ value;
+	// Make sure the size of the heap is correct
+	assertEquals("Size problem", m_heap.getSize(), testSize);
+
+	// Make sure the correct sequence is retrieved
+	// Sort the testKeys first
+	Arrays.sort(testKeys);
+	for (int i = 0; i < testSize; i++) {
+	    entry = m_heap.peek();
+	    key = m_heap.getKey(entry);
+	    
+	    assertTrue("Bad sequence in heap, iter " + i +
+		       " testValue " + testKeys[i] + " key " + key,
+		       testKeys[i] == key);
+	    value = m_heap.getValue(entry);
+	    m_heap.remove(entry);
+	    assertTrue("Bad heap size after remove",
+		       i + m_heap.getSize() + 1 == testSize);
+	}
+    }
+    // No need to test insert since it's taken care of by
+    // setupValues() + testKeyValueOrder()
+    public void testKeyValueRemove() {
+	@KEY_TYPE@ key;
+	// Make sure the size of the heap is correct
+	assertEquals("Size problem", m_heap.getSize(), testSize);
+
+	// Test removal at testSize/2, testSize/3,
+	// testSize/5, testSize/7 testSize*2/3 positions
+	key = m_heap.getKey(testSize / 2);
+	m_heap.remove(testSize / 2);
+	testKeys = m_heap.getKeys();
+	// Make sure the old key isn't in there
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		assertTrue("Old key still in key set after remove",
+			   testKeys[i] != key);
+	    }
+	testSize = testSize - 1;
+	// Use testKeyValueOrder() to test the validity after remove
+	testKeyValueOrder();
+
+	// Reset and test
+	setupValues();
+	key = m_heap.getKey(testSize / 3);
+	m_heap.remove(testSize / 3);
+	testKeys = m_heap.getKeys();
+	// Make sure the old key isn't in there
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		assertTrue("Old key still in key set after remove",
+			   testKeys[i] != key);
+	    }
+	testSize = testSize - 1;
+	// Use testKeyValueOrder() to test the validity after remove
+	testKeyValueOrder();
+
+	// Reset and test
+	setupValues();
+	key = m_heap.getKey(testSize / 5);
+	m_heap.remove(testSize / 5);
+	testKeys = m_heap.getKeys();
+	// Make sure the old key isn't in there
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		assertTrue("Old key still in key set after remove",
+			   testKeys[i] != key);
+	    }
+	testSize = testSize - 1;
+	// Use testKeyValueOrder() to test the validity after remove
+	testKeyValueOrder();
+
+	// Reset and test
+	setupValues();
+	key = m_heap.getKey(testSize / 7);
+	m_heap.remove(testSize / 7);
+	testKeys = m_heap.getKeys();
+	// Make sure the old key isn't in there
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		assertTrue("Old key still in key set after remove",
+			   testKeys[i] != key);
+	    }
+	testSize = testSize - 1;
+	// Use testKeyValueOrder() to test the validity after remove
+	testKeyValueOrder();
+
+	// Reset and test
+	setupValues();
+	key = m_heap.getKey((testSize / 3) * 2);
+	m_heap.remove((testSize / 3) * 2);
+	testKeys = m_heap.getKeys();
+	// Make sure the old key isn't in there
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		assertTrue("Old key still in key set after remove",
+			   testKeys[i] != key);
+	    }
+	testSize = testSize - 1;
+	// Use testKeyValueOrder() to test the validity after remove
+	testKeyValueOrder();
+    }
+    // No need to test insert since it's taken care of by
+    // setupValues() + testKeyValueOrder()
+    public void testKeyValueChange() {
+	@KEY_TYPE@ key;
+	@VALUE_TYPE@[] values;
+	// Make sure the size of the heap is correct
+	assertEquals("Size problem", m_heap.getSize(), testSize);
+
+	// Test removal at testSize/2, testSize/3,
+	// testSize/5, testSize/7 testSize/1.5 positions
+	key = m_heap.getKey(testSize / 2);
+	values = m_heap.getValues();
+	values[testSize / 2] = (@VALUE_TYPE@) 60231;
+	m_heap.resetKey(testSize / 2, 60231);
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		if (testKeys[i] == key)
+		    {
+			testKeys[i] = 60231;
+		    }
+	    }
+	testKeyValueOrder();
+
+	setupValues();
+	key = m_heap.getKey(testSize / 3);
+	values = m_heap.getValues();
+	values[testSize / 3] = (@VALUE_TYPE@) 60231;
+	m_heap.resetKey(testSize / 3, 60231);
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		if (testKeys[i] == key)
+		    {
+			testKeys[i] = 60231;
+		    }
+	    }
+	testKeyValueOrder();
+
+	setupValues();
+	key = m_heap.getKey(testSize / 5);
+	values = m_heap.getValues();
+	values[testSize / 5] = (@VALUE_TYPE@) 60231;
+	m_heap.resetKey(testSize / 5, 60231);
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		if (testKeys[i] == key)
+		    {
+			testKeys[i] = 60231;
+		    }
+	    }
+	testKeyValueOrder();
+
+	setupValues();
+	key = m_heap.getKey(testSize / 7);
+       	values = m_heap.getValues();
+	values[testSize / 7] = (@VALUE_TYPE@) 60231;
+	m_heap.resetKey(testSize / 7, 60231);
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		if (testKeys[i] == key)
+		    {
+			testKeys[i] = 60231;
+		    }
+	    }
+	testKeyValueOrder();
+
+	setupValues();
+	key = m_heap.getKey((testSize / 3) * 2);
+     	values = m_heap.getValues();
+	values[(testSize / 3) * 2] = (@VALUE_TYPE@) 60231;
+	m_heap.resetKey((testSize / 3) * 2, 60231);
+	for (int i = 0; i < testKeys.length; i++)
+	    {
+		if (testKeys[i] == key)
+		    {
+			testKeys[i] = 60231;
+		    }
+	    }
+	testKeyValueOrder();
+    }
+}

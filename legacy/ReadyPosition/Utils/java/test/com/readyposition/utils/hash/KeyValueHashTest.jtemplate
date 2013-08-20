@@ -1,0 +1,144 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This file should be machine generated!  Use Velocity and/or Ant.
+
+package com.readyposition.utils.hash;
+
+import com.readyposition.utils.itemizer.@KEY_NAME@@VALUE_NAME@Itemizer;
+import junit.framework.TestCase;
+
+public class @KEY_NAME@@VALUE_NAME@HashTest extends TestCase
+{
+    private @KEY_NAME@@VALUE_NAME@Hash m_hash;
+    private int m_iterations = 10000;
+
+    public void setUp() {
+	// Create and populate a hash table.
+	m_hash = new @KEY_NAME@@VALUE_NAME@Hash();	
+	setupValues();
+    }
+
+    public void tearDown() {
+	m_hash = null;
+    }
+
+    private void setupValues() {
+	for (int i = 0; i < m_iterations; i++) {
+	    m_hash.put((@KEY_TYPE@)i, (@VALUE_TYPE@)i);
+	}
+    }
+
+    public void testClear() {
+	m_hash.clear();
+
+	// Make sure the table is empty.
+	assertEquals("Cleared table has non-zero size", m_hash.getSize(), 0);
+
+	// Make sure array methods return empty arrays.
+	@KEY_TYPE@[] keys = m_hash.getKeys();
+	assertEquals("Cleared key array has non-zero length", keys.length, 0);
+	@VALUE_TYPE@[] values = m_hash.getValues();
+	assertEquals("Cleared value array has non-zero length",
+	  values.length, 0);
+	int[] entries = m_hash.getEntries();
+	assertEquals("Cleared entries array has non-zero length",
+	  entries.length, 0);
+
+	// Make sure the other stuff still works.
+	setupValues();
+	testKeyPutAndGet();
+	m_hash.clear();
+	setupValues();
+	testItemizerAndEntries();
+	m_hash.clear();
+	setupValues();
+	testArrayMethods();
+    }
+
+    public void testKeyPutAndGet() {
+	// Make sure the size of the table is correct
+	assertEquals("Size problem", m_hash.getSize(), m_iterations);
+
+	// Make sure the same values can be retrieved.
+	for (int i = 0; i < m_iterations; i++) {
+	    assertTrue("Bad value in hash table",
+	      ((@VALUE_TYPE@)i == m_hash.get((@KEY_TYPE@)i)));
+	}
+	// Replace even values with new values and remove odd values.
+	for (int i = 0; i < m_iterations; i++) {
+	    if ((i & 1) == 0) {
+		m_hash.put((@KEY_TYPE@)i, ((@VALUE_TYPE@)(i * 2)));
+	    } else {
+		m_hash.remove((@KEY_TYPE@)i);
+	    }
+	}
+
+	// Make sure the size of the table is correct
+	assertEquals("Reduced size problem", m_hash.getSize(), m_iterations/2);
+
+	// Make sure the new values can be retrieved and removed
+	// values are gone.
+	for (int i = 0; i < m_iterations; i++) {
+	    if ((i & 1) == 0) {
+		// Test containment using containsKey.
+		assertTrue("Positive containment failed",
+		  m_hash.containsKey((@KEY_TYPE@)i));
+
+		// Test containment and content using get.
+		assertTrue("Bad new value in hash table",
+		  (((@VALUE_TYPE@)(i * 2)) == m_hash.get((@KEY_TYPE@)i)));
+	    } else {
+		// Test containment using containsKey.
+		assertFalse("Negative containment failed",
+		  m_hash.containsKey((@KEY_TYPE@)i));
+		try {
+		    // Test containment and content using get.
+		    m_hash.get((@KEY_TYPE@)i);
+		    fail("Entry wasn't removed as expected");
+		} catch (IndexOutOfBoundsException e) {
+		    // We hope to get here.
+		}
+	    }
+	}
+    }
+
+    public void testItemizerAndEntries() {
+	// Iterate over the table and make sure the itemizer returns
+	// the right values.
+	@KEY_NAME@@VALUE_NAME@Itemizer it = m_hash.itemizer();
+	while (it.hasNext()) {
+	    @KEY_TYPE@ key = it.key();
+	    @VALUE_TYPE@ value = it.value();
+	    int entry = it.entry();
+	    assertTrue("itemizer key not right",
+	      (m_hash.getKey(entry) == key));
+	    assertTrue("itemizer value not right",
+	      (m_hash.getEntryValue(entry) == value));
+	    it.next();
+	}
+    }
+
+    public void testArrayMethods() {
+	// Get arrays of keys, values, and entries from the table.
+	@KEY_TYPE@[] keys = m_hash.getKeys();
+	@VALUE_TYPE@[] values = m_hash.getValues();
+	int[] entries = m_hash.getEntries();
+
+	// Make sure the data is consistent
+	for (int i = 0; i < m_iterations; i++) {
+	    assertTrue("Key inconsistency",
+	      (m_hash.get(keys[i]) == values[i]));
+	    assertTrue("Value inconsistency",
+	      (m_hash.getEntryValue(entries[i]) == values[i]));
+	    assertTrue("Entry inconsistency",
+	      (m_hash.getEntry(keys[i]) == entries[i]));
+	}
+    }
+}

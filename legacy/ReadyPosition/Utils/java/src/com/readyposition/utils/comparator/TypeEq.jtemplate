@@ -1,0 +1,28 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - Figure out how to generate this code
+
+package com.readyposition.utils.comparator;
+
+/**
+ * Interface that allow comparison of two objects of type @VALUE_TYPE@.
+ */
+public interface @VALUE_NAME@Eq
+{
+    /**
+     * Tests for the equality of type @VALUE_TYPE@ values.
+     *
+     * @param a the first @VALUE_TYPE@ to be compared.
+     * @param b the second @VALUE_TYPE@ to be compared.
+     * @return true only if the specified object is also a comparator
+     * and it imposes the same ordering as this comparator
+     */
+    boolean equals(@VALUE_TYPE@ a, @VALUE_TYPE@ b);
+}

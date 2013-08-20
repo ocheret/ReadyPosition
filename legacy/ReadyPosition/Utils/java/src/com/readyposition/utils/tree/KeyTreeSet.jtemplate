@@ -1,0 +1,102 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+package com.readyposition.utils.tree;
+
+/**
+ * @KEY_NAME@TreeSet is an efficient array oriented tree set with
+ * @KEY_TYPE@ keys.
+ */
+public class @KEY_NAME@TreeSet extends @KEY_NAME@AbstractTree {
+    /**
+     * Constructs an empty @KEY_NAME@TreeSet with the specified initial
+     * capacity and growth factor.
+     *
+     * @param initialCapacity the number of entries the tree is
+     *  initially allocated to hold.
+     * @param growthFactor the factor by which to increase the tree size
+     *  when it needs to expand.
+     */
+    protected @KEY_NAME@TreeSet(int initialCapacity, float growthFactor) {
+	super(initialCapacity, growthFactor);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@TreeSet with the specified initial
+     * capacity and a default growth factor of 2.
+     *
+     * @param initialCapacity the number of entries the tree is
+     *  initially allocated to hold.
+     */
+    protected @KEY_NAME@TreeSet(int initialCapacity) {
+	super(initialCapacity);
+    }
+
+    /**
+     * Constructs an empty @KEY_NAME@TreeSet with a default initial
+     * capacity of 16 and a default growth factor of 2.
+     */
+    protected @KEY_NAME@TreeSet() {
+	super();
+    }
+
+    /**
+     * Adds a key to the set.  If the table previously contained a
+     * mapping for this key, no new entry is added.
+     *
+     * @param key key to be added to the set.
+     * @return the entry number for the key/value pair.
+     */
+    public int add(@KEY_TYPE@ key) {
+	return intern(key);
+    }
+
+    /**
+     * Removes a key from the set.
+     */
+    public void remove(@KEY_TYPE@ key) {
+	int i = getEntry(key);
+	if (i == -1)
+	    throw new IndexOutOfBoundsException("No such key " + key);
+	removeEntry(i);
+    }
+
+    /**
+     * Clears the array of values to an initial state.
+     */
+    protected void clearValues() {}
+
+    /**
+     * Grow the values array.  All values are copied to the expanded array.
+     *
+     * @param size the new size of the values array.
+     */
+    protected void growValues(int size) {}
+
+    /**
+     * Clean up data for the value at a specified entry.
+     *
+     * @param entry the entry number of the value to clean up.
+     */
+    protected void removeValue(int entry) {}
+
+    /**
+     * Invoked to reinsert entries into the tree after the comparator
+     * has been changed.
+     */
+    protected void reinsert() {
+	int[] entries = getEntries();
+	@KEY_TYPE@[] keys = m_key;
+	clear();
+	for (int i = 0; i < entries.length; i++) {
+	    int j = entries[i];
+	    add(keys[j]);
+	}
+    }
+}

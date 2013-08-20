@@ -1,0 +1,2326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="Utils" basedir="." default="jar">
+    <property name="parcel" value="${ant.project.name}"/>
+    <property name="buildroot" value="${basedir}/../../Build_${user.name}"/>
+    <property name="builddir" value="${buildroot}/${parcel}"/>
+    <property name="jardir" value="${buildroot}/lib"/>
+    <property name="jarfile" value="${jardir}/${parcel}.jar"/>
+    <property name="javadocdir" value="${builddir}/javadoc"/>
+    <property name="classdir" value="${builddir}/classes"/>
+    <property name="testclassdir" value="${builddir}/testclasses"/>
+    <property name="depcache" value="${builddir}/deps"/>
+    <property name="srcdir" value="${basedir}/src"/>
+    <property name="gendir" value="${builddir}/gensrc"/>
+    <property name="testdir" value="${basedir}/test"/>
+    <property name="gentestdir" value="${builddir}/testgensrc"/>
+
+    <target name="verify" depends="init" description="Verify property values">
+	<echo message="java.version = ${java.version}"/>
+        <echo message="parcel = ${parcel}"/>
+	<echo message="buildroot = ${buildroot}"/>
+	<echo message="builddir = ${builddir}"/>
+	<echo message="jardir = ${jardir}"/>
+	<echo message="jarfile = ${jarfile}"/>
+	<echo message="javadocdir = ${javadocdir}"/>
+	<echo message="classdir = ${classdir}"/>
+	<echo message="testclassdir = ${testclassdir}"/>
+	<echo message="depcache = ${depcache}"/>
+	<echo message="srcdir = ${srcdir}"/>
+	<echo message="gendir = ${gendir}"/>
+	<echo message="testdir = ${testdir}"/>
+	<echo message="gentestdir = ${gentestdir}"/>
+    </target>
+
+    <target name="init">
+	<mkdir dir="${jardir}"/>
+	<path id="classpath">
+	    <pathelement location="${classdir}"/>
+	    <pathelement location="${testclassdir}"/>
+	    <fileset dir="${jardir}">
+	        <include name="**/*.jar"/>
+	        <exclude name="**/${parcel}.jar"/>
+	    </fileset>
+	</path>
+    </target>
+
+    <!-- This overrides the default "generate" target -->
+    <target name="generate" depends="init">
+	<!-- Value Itemizers -->
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+	<antcall target="generateValueItemizer">
+	    <param name="valueName" value="Object"/>
+	    <param name="valueType" value="Object"/>
+	</antcall>
+
+	<!-- Key Itemizers -->
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	</antcall>
+
+	<!-- KeyValue Itemizers -->
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Char"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Byte"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Short"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Int"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Long"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Float"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Double"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Char"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Byte"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Short"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Int"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Long"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Float"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Double"/>
+	</antcall>
+	<antcall target="generateKeyValueItemizer">
+	    <param name="keyName" value="Object"/>
+	    <param name="valueName" value="Object"/>
+	</antcall>
+
+	<!-- KeyAbstractHash -->
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="keyEq" value="CHAR"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="keyEq" value="BYTE"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="keyEq" value="SHORT"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="keyEq" value="INT"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="keyEq" value="LONG"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="keyEq" value="FLOAT"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="keyEq" value="DOUBLE"/>
+	</antcall>
+
+	<!-- KeyHashSet -->
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyHashSet">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	</antcall>
+
+	<!-- KeyValueHash -->
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<!-- KeyIntsHash -->
+	<antcall target="generateKeyIntsHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyIntsHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyIntsHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	</antcall>
+
+	<!-- KeyObjectHash -->
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyObjectHash">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	</antcall>
+
+	<!-- KeyValueHashTest -->
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHashTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<!-- KeyAbstractTree -->
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="keyEq" value="CHAR"/>
+	</antcall>
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="keyEq" value="BYTE"/>
+	</antcall>
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="keyEq" value="SHORT"/>
+	</antcall>
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="keyEq" value="INT"/>
+	</antcall>
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="keyEq" value="LONG"/>
+	</antcall>
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="keyEq" value="FLOAT"/>
+	</antcall>
+	<antcall target="generateKeyAbstractTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="keyEq" value="DOUBLE"/>
+	</antcall>
+
+	<!-- KeyTreeSet -->
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyTreeSet">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	</antcall>
+
+	<!-- KeyValueTree -->
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<!-- KeyObjectTree -->
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Char"/>
+	    <param name="keyType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Byte"/>
+	    <param name="keyType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Short"/>
+	    <param name="keyType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Int"/>
+	    <param name="keyType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Float"/>
+	    <param name="keyType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyObjectTree">
+	    <param name="keyName" value="Object"/>
+	    <param name="keyType" value="Object"/>
+	</antcall>
+
+	<!-- KeyValueTreeTest -->
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueTreeTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<!-- Comparator -->
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+	<antcall target="generateComparator">
+	    <param name="valueName" value="Object"/>
+	    <param name="valueType" value="Object"/>
+	</antcall>
+
+	<!-- Sort -->
+	<antcall target="generateSort">
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+	<antcall target="generateSort">
+	    <param name="valueName" value="Object"/>
+	    <param name="valueType" value="Object"/>
+	</antcall>
+
+	<!-- Search -->
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+	<antcall target="generateSearch">
+	    <param name="valueName" value="Object"/>
+	    <param name="valueType" value="Object"/>
+	</antcall>
+
+	<!-- KeyAbstractHeap -->
+	<antcall target="generateKeyAbstractHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="keyConst" value="LONG"/>
+	</antcall>
+	<antcall target="generateKeyAbstractHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="keyConst" value="DOUBLE"/>
+	</antcall>
+
+	<!-- KeyValueHeap -->
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+
+	<!-- KeyValueHeap -->
+	<antcall target="generateKeyObjectHeap">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyObjectHeap">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	</antcall>
+
+	<!-- Matrix -->
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Boolean"/>
+	    <param name="valueType" value="boolean"/>
+	    <param name="valueSample" value="true"/>
+	    <param name="valueNull" value="false"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	    <param name="valueSample" value="'A'"/>
+	    <param name="valueNull" value="'\0'"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	    <param name="valueSample" value="1"/>
+	    <param name="valueNull" value="0"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	    <param name="valueSample" value="1"/>
+	    <param name="valueNull" value="0"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	    <param name="valueSample" value="1"/>
+	    <param name="valueNull" value="0"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	    <param name="valueSample" value="1"/>
+	    <param name="valueNull" value="0"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	    <param name="valueSample" value="1.0f"/>
+	    <param name="valueNull" value="0.0f"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	    <param name="valueSample" value="1.0"/>
+	    <param name="valueNull" value="0.0"/>
+	</antcall>
+	<antcall target="generateMatrix">
+	    <param name="valueName" value="Object"/>
+	    <param name="valueType" value="Object"/>
+	    <param name="valueSample" value="TEST_STR"/>
+	    <param name="valueNull" value="null"/>
+	</antcall>
+
+	<!-- KeyValueHeapTest -->
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Long"/>
+	    <param name="keyType" value="long"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Char"/>
+	    <param name="valueType" value="char"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Byte"/>
+	    <param name="valueType" value="byte"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Short"/>
+	    <param name="valueType" value="short"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Int"/>
+	    <param name="valueType" value="int"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Long"/>
+	    <param name="valueType" value="long"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Float"/>
+	    <param name="valueType" value="float"/>
+	</antcall>
+	<antcall target="generateKeyValueHeapTest">
+	    <param name="keyName" value="Double"/>
+	    <param name="keyType" value="double"/>
+	    <param name="valueName" value="Double"/>
+	    <param name="valueType" value="double"/>
+	</antcall>
+    </target>
+
+    <target name="generateValueItemizer">
+	<property name="itemizerDir" value="com/readyposition/utils/itemizer"/>
+	<copy file="${srcdir}/${itemizerDir}/ValueItemizer.jtemplate"
+	 toFile="${gendir}/${itemizerDir}/${valueName}ValueItemizer.java">
+	    <filterset>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyItemizer">
+	<property name="itemizerDir" value="com/readyposition/utils/itemizer"/>
+	<copy file="${srcdir}/${itemizerDir}/KeyItemizer.jtemplate"
+	 toFile="${gendir}/${itemizerDir}/${keyName}KeyItemizer.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyValueItemizer">
+	<property name="itemizerDir" value="com/readyposition/utils/itemizer"/>
+	<copy file="${srcdir}/${itemizerDir}/KeyValueItemizer.jtemplate"
+	 toFile="${gendir}/${itemizerDir}/${keyName}${valueName}Itemizer.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyAbstractHash">
+	<property name="hashDir" value="com/readyposition/utils/hash"/>
+	<copy file="${srcdir}/${hashDir}/KeyAbstractHash.jtemplate"
+	 toFile="${gendir}/${hashDir}/${keyName}AbstractHash.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="KEY_EQ" value="${keyEq}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyHashSet">
+	<property name="hashDir" value="com/readyposition/utils/hash"/>
+	<copy file="${srcdir}/${hashDir}/KeyHashSet.jtemplate"
+	 toFile="${gendir}/${hashDir}/${keyName}HashSet.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyValueHash">
+	<property name="hashDir" value="com/readyposition/utils/hash"/>
+	<copy file="${srcdir}/${hashDir}/KeyValueHash.jtemplate"
+	 toFile="${gendir}/${hashDir}/${keyName}${valueName}Hash.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyObjectHash">
+	<property name="hashDir" value="com/readyposition/utils/hash"/>
+	<copy file="${srcdir}/${hashDir}/KeyObjectHash.jtemplate"
+	 toFile="${gendir}/${hashDir}/${keyName}ObjectHash.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyIntsHash">
+	<property name="hashDir" value="com/readyposition/utils/hash"/>
+	<copy file="${srcdir}/${hashDir}/KeyIntsHash.jtemplate"
+	 toFile="${gendir}/${hashDir}/${keyName}IntsHash.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyValueHashTest">
+	<property name="hashDir" value="com/readyposition/utils/hash"/>
+	<copy file="${testdir}/${hashDir}/KeyValueHashTest.jtemplate"
+	 toFile="${gentestdir}/${hashDir}/${keyName}${valueName}HashTest.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyAbstractTree">
+	<property name="treeDir" value="com/readyposition/utils/tree"/>
+	<copy file="${srcdir}/${treeDir}/KeyAbstractTree.jtemplate"
+	 toFile="${gendir}/${treeDir}/${keyName}AbstractTree.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="KEY_EQ" value="${keyEq}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyTreeSet">
+	<property name="treeDir" value="com/readyposition/utils/tree"/>
+	<copy file="${srcdir}/${treeDir}/KeyTreeSet.jtemplate"
+	 toFile="${gendir}/${treeDir}/${keyName}TreeSet.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyValueTree">
+	<property name="treeDir" value="com/readyposition/utils/tree"/>
+	<copy file="${srcdir}/${treeDir}/KeyValueTree.jtemplate"
+	 toFile="${gendir}/${treeDir}/${keyName}${valueName}Tree.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyObjectTree">
+	<property name="treeDir" value="com/readyposition/utils/tree"/>
+	<copy file="${srcdir}/${treeDir}/KeyObjectTree.jtemplate"
+	 toFile="${gendir}/${treeDir}/${keyName}ObjectTree.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyValueTreeTest">
+	<property name="treeDir" value="com/readyposition/utils/tree"/>
+	<copy file="${testdir}/${treeDir}/KeyValueTreeTest.jtemplate"
+	 toFile="${gentestdir}/${treeDir}/${keyName}${valueName}TreeTest.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateComparator">
+	<property name="comparatorDir"
+	 value="com/readyposition/utils/comparator"/>
+	<filterset id="comparatorFS">
+	    <filter token="VALUE_NAME" value="${valueName}"/>
+	    <filter token="VALUE_TYPE" value="${valueType}"/>
+	    <filter token="WARNING"
+	     value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	</filterset>
+	<copy file="${srcdir}/${comparatorDir}/TypeComparator.jtemplate"
+	 toFile="${gendir}/${comparatorDir}/${valueName}Comparator.java">
+	   <filterset refid="comparatorFS"/>
+	</copy>
+	<copy file="${srcdir}/${comparatorDir}/TypeEq.jtemplate"
+	 toFile="${gendir}/${comparatorDir}/${valueName}Eq.java">
+	   <filterset refid="comparatorFS"/>
+	</copy>
+	<copy file="${srcdir}/${comparatorDir}/TypeCmp.jtemplate"
+	 toFile="${gendir}/${comparatorDir}/${valueName}Cmp.java">
+	   <filterset refid="comparatorFS"/>
+	</copy>
+    </target>
+
+    <target name="generateSearch">
+	<property name="searchDir" value="com/readyposition/utils/search"/>
+	<copy file="${srcdir}/${searchDir}/TypeSearch.jtemplate"
+	 toFile="${gendir}/${searchDir}/${valueName}Search.java">
+	    <filterset>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateSort">
+	<property name="sortDir" value="com/readyposition/utils/sort"/>
+	<copy file="${srcdir}/${sortDir}/TypeSort.jtemplate"
+	 toFile="${gendir}/${sortDir}/${valueName}Sort.java">
+	    <filterset>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyAbstractHeap">
+	<property name="heapDir" value="com/readyposition/utils/heap"/>
+	<copy file="${srcdir}/${heapDir}/KeyAbstractHeap.jtemplate"
+	 toFile="${gendir}/${heapDir}/${keyName}AbstractHeap.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="KEY_CONST" value="${keyConst}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyValueHeap">
+	<property name="heapDir" value="com/readyposition/utils/heap"/>
+	<copy file="${srcdir}/${heapDir}/KeyValueHeap.jtemplate"
+	 toFile="${gendir}/${heapDir}/${keyName}${valueName}Heap.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateKeyObjectHeap">
+	<property name="heapDir" value="com/readyposition/utils/heap"/>
+	<copy file="${srcdir}/${heapDir}/KeyObjectHeap.jtemplate"
+	 toFile="${gendir}/${heapDir}/${keyName}ObjectHeap.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="generateMatrix">
+	<property name="matrixDir" value="com/readyposition/utils/matrix"/>
+	<copy file="${srcdir}/${matrixDir}/ValueMatrix.jtemplate"
+	 toFile="${gendir}/${matrixDir}/${valueName}Matrix.java">
+	    <filterset>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+	<copy file="${testdir}/${matrixDir}/ValueMatrixTest.jtemplate"
+	 toFile="${gentestdir}/${matrixDir}/${valueName}MatrixTest.java">
+	    <filterset>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="VALUE_SAMPLE" value="${valueSample}"/>
+		<filter token="VALUE_NULL" value="${valueNull}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+    <target name="generateKeyValueHeapTest">
+	<property name="heapDir" value="com/readyposition/utils/heap"/>
+	<copy file="${testdir}/${heapDir}/KeyValueHeapTest.jtemplate"
+	 toFile="${gentestdir}/${heapDir}/${keyName}${valueName}HeapTest.java">
+	    <filterset>
+		<filter token="KEY_NAME" value="${keyName}"/>
+		<filter token="KEY_TYPE" value="${keyType}"/>
+		<filter token="VALUE_NAME" value="${valueName}"/>
+		<filter token="VALUE_TYPE" value="${valueType}"/>
+		<filter token="WARNING"
+		 value="MACHINE GENERATED FILE - DO NOT EDIT!"/>
+	    </filterset>
+	</copy>
+    </target>
+
+    <target name="compile" depends="generate">
+<!--
+    <target name="compile" depends="init">
+     -->
+	<mkdir dir="${classdir}"/>
+	<mkdir dir="${testclassdir}"/>
+	<mkdir dir="${depcache}"/>
+	<depend srcdir="${srcdir}:${testdir}:${gendir}:{gentestdir}"
+	 destdir="${classdir}" cache="${depcache}"/>
+	<echo message="Compiling main sources."/>
+	<javac debug="true" destdir="${classdir}" source="1.4">
+	    <src location="${srcdir}"/>
+	    <src location="${gendir}"/>
+	    <classpath refid="classpath"/>
+	</javac>
+	<echo message="Compiling test sources."/>
+	<javac debug="true" destdir="${testclassdir}" source="1.4">
+	    <src location="${testdir}"/>
+	    <src location="${gentestdir}"/>
+	    <classpath refid="classpath"/>
+	</javac>
+    </target>
+
+    <target name="test" depends="compile" description="Run all unit tests">
+
+        <!-- Is there a less ugly way to do this? -->
+        <condition property="internal.excludeFromTests"
+	           value="${excludeFromTests}">
+	    <isset property="excludeFromTests"/>
+	</condition>
+        <condition property="internal.excludeFromTests"
+	           value="">
+	    <not><isset property="excludeFromTests"/></not>
+	</condition>
+
+	<junit failureProperty="junit.failed" errorProperty="junit.failed">
+	    <classpath refid="classpath"/>
+	    <formatter type="plain" usefile="false"/>
+	    <batchtest>
+		<fileset dir="${testclassdir}">
+		    <include name="**/*Test.class"/>
+		    <exclude name="${internal.excludeFromTests}"/>
+		</fileset>
+	    </batchtest>
+	</junit>
+	<fail message="Not all JUnit Tests Passed" if="junit.failed"/>
+    </target>
+
+    <target name="jar" depends="test">
+	<jar jarfile="${jarfile}" basedir="${classdir}"/>
+    </target>
+
+    <target name="javadoc" depends="compile">
+	<mkdir dir="${javadocdir}"/>
+	<javadoc destdir="${javadocdir}" classpathref="classpath"
+	         use="true" source="1.4" windowtitle="${parcel} API">
+	    <sourcepath location="${srcdir}"/>
+	    <sourcepath location="${gendir}"/>
+	    <package name="com.readyposition.*"/>
+	</javadoc>
+    </target>
+
+    <target name="clean" description="Clean up build for this parcel">
+	<delete dir="${builddir}"/>
+	<delete file="${jarfile}"/>
+    </target>
+
+    <target name="pure" description="Remove entire build area">
+	<delete dir="${buildroot}"/>
+    </target>
+
+    <target name="all" depends="jar,javadoc"/>
+
+</project>
+

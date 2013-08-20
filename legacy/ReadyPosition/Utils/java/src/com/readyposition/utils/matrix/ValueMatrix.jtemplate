@@ -1,0 +1,132 @@
+/*
+ * Copyright 1997, 2003 Charles A. Ocheret, All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This file should be machine generated!  Use Velocity and/or Ant.
+
+package com.readyposition.utils.matrix;
+
+/**
+ * This class implements a 2 dimensional matrix of integers.
+ */
+public class @VALUE_NAME@Matrix {
+    /**
+     * Constructs a new @VALUE_NAME@Matrix with the specified number of rows
+     * and columns.
+     *
+     * @param rows the number of rows in the matrix (must be >= 0).
+     * @param cols the number of columns in the matrix (must be >= 0).
+     * @exception IllegalArgumentException if the rows or cols are < 0.
+     */
+    public @VALUE_NAME@Matrix(int rows, int cols)
+	throws IllegalArgumentException
+    {
+	// Check the arguments
+	if (rows < 0) {
+	    throw new IllegalArgumentException("rows == " +
+	      rows + ", but must be >= 0");
+	}
+	if (cols < 0) {
+	    throw new IllegalArgumentException("cols == " +
+	      cols + ", but must be >= 0");
+	}
+
+	// Be what you can be.
+	m_rows = rows;
+	m_cols = cols;
+	m_data = new @VALUE_TYPE@[rows * cols];
+    }
+
+    /**
+     * Resizes the @VALUE_NAME@Matrix and preserves as much of the existing
+     * data in the matrix as possible.  New cells in the matrix are zero
+     * filled.  Old data is clipped to the new size as needed.
+     *
+     * @param rows the new number of rows.
+     * @param cols the new number of columns.
+     * @exception IllegalArgumentException if the rows or cols are < 0.
+     */
+    public void resize(int rows, int cols)
+	throws IllegalArgumentException
+    {
+	// Check the arguments
+	if (rows < 0) {
+	    throw new IllegalArgumentException("rows == " +
+	      rows + ", but must be >= 0");
+	}
+	if (cols < 0) {
+	    throw new IllegalArgumentException("cols == " +
+	      cols + ", but must be >= 0");
+	}
+
+	// Make a new array to hold the data
+	@VALUE_TYPE@ newData[] = new @VALUE_TYPE@[rows * cols];
+
+	// Copy data from the old matrix to the new one
+	int oldIndex = 0;
+	int newIndex = 0;
+	int rowSize = (cols < m_cols) ? cols : m_cols;
+	int rowCount = (rows < m_rows) ? rows : m_rows;
+	for (int i = 0; i < rowCount; i++) {
+	    System.arraycopy(m_data, oldIndex, newData, newIndex, rowSize);
+	    oldIndex += m_cols;
+	    newIndex += cols;
+	}
+
+	m_rows = rows;
+	m_cols = cols;
+	m_data = newData;
+    }
+
+    /**
+     * Get the number of rows in the @VALUE_NAME@Matrix.
+     *
+     * @return the number of rows in the @VALUE_NAME@Matrix.
+     */
+    public int getRows() { return m_rows; }
+
+    /**
+     * Get the number of columns in the @VALUE_NAME@Matrix.
+     *
+     * @return the number of columns in the @VALUE_NAME@Matrix.
+     */
+    public int getCols() { return m_cols; }
+
+    /**
+     * Retrieve the value of a cell in the @VALUE_NAME@Matrix.
+     *
+     * @param row the row of the cell to be retrieved from the
+     *   @VALUE_NAME@Matrix.
+     * @param col the column of the cell to be retrieved from the
+     *   @VALUE_NAME@Matrix.
+     * @return the value of the cell at the specified location.
+     */
+    public @VALUE_TYPE@ get(int row, int col) {
+	return m_data[row * m_cols + col];
+    }
+
+    /**
+     * Set the value of a cell in the @VALUE_NAME@Matrix.
+     *
+     * @param row the row of the cell to be set.
+     * @param col the column of the cell to be set.
+     * @param value the value to place in the specified cell.
+     */
+    public void set(int row, int col, @VALUE_TYPE@ value) {
+	m_data[row * m_cols + col] = value;
+    }
+
+    /** The array which contains the integer values. */
+    protected @VALUE_TYPE@ m_data[];
+
+    /** The number of rows in the matrix. */
+    protected int m_rows;
+
+    /** The number of columns in the matrix. */
+    protected int m_cols;
+}

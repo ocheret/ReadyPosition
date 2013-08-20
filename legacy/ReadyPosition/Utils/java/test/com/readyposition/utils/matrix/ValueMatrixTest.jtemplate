@@ -1,0 +1,120 @@
+/*
+ * Copyright 2003 Charles A. Ocheret.  All Rights Reserved
+ *
+ * THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION AND
+ * REMAINS THE UNPUBLISHED PROPERTY OF CHARLES A. OCHERET.
+ * USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED EXCEPT AS PERMITTED
+ * BY EXPRESS WRITTEN LICENSE AGREEMENT WITH CHARLES A. OCHERET.
+ */
+
+// XXX - This file should be machine generated!  Use Velocity and/or Ant.
+
+package com.readyposition.utils.matrix;
+
+import junit.framework.TestCase;
+
+public class @VALUE_NAME@MatrixTest extends TestCase {
+    private String TEST_STR = "FOOBAR";
+
+    public void setUp() {
+	// Empty
+    }
+
+    public void tearDown() {
+	// Empty
+    }
+
+    public void testAll() {
+	// Try to construct with invalid arguments.
+	try {
+	    new @VALUE_NAME@Matrix(-1, 10);
+	    fail("Constructed with negative rows.");
+	} catch (IllegalArgumentException e) {
+	    // We want to get here.
+	}
+	try {
+	    new @VALUE_NAME@Matrix(10, -1);
+	    fail("Constructed with negative rows.");
+	} catch (IllegalArgumentException e) {
+	    // We want to get here.
+	}
+
+	// Try to resize with invalid arguments.
+	try {
+	    @VALUE_NAME@Matrix m = new @VALUE_NAME@Matrix(0, 0);
+	    m.resize(-1, 10);
+	    fail("Resized with negative rows.");
+	} catch (IllegalArgumentException e) {
+	    // We want to get here.
+	}
+	try {
+	    @VALUE_NAME@Matrix m = new @VALUE_NAME@Matrix(0, 0);
+	    m.resize(10, -1);
+	    fail("Resized with negative rows.");
+	} catch (IllegalArgumentException e) {
+	    // We want to get here.
+	}
+
+	doTest(0, 0);
+	doTest(1, 1);
+	doTest(10, 10);
+	doTest(100, 50);
+	doTest(50, 100);
+    }
+
+    protected final static int RESIZED_ROWS = 40;
+    protected final static int RESIZED_COLS = 40;
+
+    protected void doTest(int rows, int cols) {
+	// Make sure we can successfully allocate the object.
+	@VALUE_NAME@Matrix lm = new @VALUE_NAME@Matrix(rows, cols);
+
+	// Verify number of rows and columns.
+	assertEquals("Number of rows is not as constructed",
+	  rows, lm.getRows());
+	assertEquals("Number of columns is not as constructed",
+	  cols, lm.getCols());
+
+	// Make sure we can address every cell in the matrix.
+	for (int r = 0; r < rows; r++) {
+	    for (int c = 0; c < cols; c++) {
+		lm.set(r, c, (@VALUE_TYPE@)(@VALUE_SAMPLE@));
+	    }
+	}
+
+	// Make sure we can retrieve the values we set.
+	for (int r = 0; r < rows; r++) {
+	    for (int c = 0; c < cols; c++) {
+		assertTrue("Unexpected value found in matrix.",
+		  ((@VALUE_TYPE@)(@VALUE_SAMPLE@) == lm.get(r, c)));
+	    }
+	}
+
+	// Resize the matrix
+	lm.resize(RESIZED_ROWS, RESIZED_COLS);
+
+	// Verify number of rows and columns.
+	assertEquals("Number of rows is not as resized",
+	  RESIZED_ROWS, lm.getRows());
+	assertEquals("Number of columns is not as resized",
+	  RESIZED_COLS, lm.getCols());
+
+	// Make sure that old values are preserved where they aren't truncated.
+	int maxOldRow = (rows > RESIZED_ROWS) ? RESIZED_ROWS : rows;
+	int maxOldCol = (cols > RESIZED_COLS) ? RESIZED_COLS : cols;
+	for (int r = 0; r < maxOldRow; r++) {
+	    for (int c = 0; c < maxOldCol; c++) {
+		assertTrue("Unexpected value found in resized matrix.",
+		  ((@VALUE_TYPE@)(@VALUE_SAMPLE@) == lm.get(r, c)));
+	    }
+	}
+
+	// Make sure that new values are all empty.
+	for (int r = maxOldRow; r < RESIZED_ROWS; r++) {
+	    for (int c = maxOldCol; c < RESIZED_COLS; c++) {
+		assertTrue("New cell in resized matrix has a value",
+		  ((@VALUE_TYPE@)(@VALUE_NULL@) == lm.get(r, c)));
+	    }
+	}
+    }
+}
