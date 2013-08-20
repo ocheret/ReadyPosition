@@ -1,3 +1,15 @@
-This will soon contain build instructions.
+Build Instructions for ReadyPosition
+------------------------------------
 
-~chuck
+From the readyposition directory at the root of the working area (containing
+build.xml and common.xml), execute...
+
+  $ ant pure jar javadoc
+
+This will clean up any old build artifacts.  It will also do code
+generation, compilation, unit testing, build jar files, and generate
+javadoc.
+
+The resulting jar files can be found in Build_<username>/lib (e.g.
+Build_chuck/lib).  The resulting javaodc tree will be under
+Build_<username>/javadoc.
