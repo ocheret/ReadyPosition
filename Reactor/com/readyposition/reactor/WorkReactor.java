@@ -1,14 +1,16 @@
 package com.readyposition.reactor;
 
+import java.nio.channels.SelectableChannel;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WorkReactor implements Runnable
+public class WorkReactor implements Reactor, Runnable
 {
     /** Class wide logger. */
-    private final static Logger s_logger = LoggerFactory.getLogger(WorkReactor.class);
+    private final static Logger s_logger =
+        LoggerFactory.getLogger(WorkReactor.class);
 
     /** Default singleton instance returned by getDefaultInstance(). */
     private static WorkReactor s_defaultInstance;
@@ -35,8 +37,8 @@ public class WorkReactor implements Runnable
     protected boolean m_isWorkToDo;
 
     /**
-     * The number of passes through the reactor loop. Allowed to wrap. Useful for
-     * debugging.
+     * The number of passes through the reactor loop. Allowed to
+     * wrap. Useful for debugging.
      */
     protected long m_cycleCount;
 
@@ -237,10 +239,10 @@ public class WorkReactor implements Runnable
                     if (work.complete()) {
                         workSubmit(work);
                     } else {
-                        // We were not able to successfully transition back to
-                        // the pending state.  This means that the Work
-                        // was cancelled after a successful run so we won't
-                        // resubmit.
+                        // We were not able to successfully transition
+                        // back to the pending state.  This means that
+                        // the Work was cancelled after a successful
+                        // run so we won't resubmit.
                         work.setToPending();
                     }
                 } else {
@@ -269,5 +271,78 @@ public class WorkReactor implements Runnable
                     return false;
                 }
             });
+    }
+
+    public Timer timerCreateRel(long delta, TimerHandler handler) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do Timer operations");
+    }
+
+    /**
+     * Creates a timer that will fire at a specific time.
+     *
+     * @param time the time at which the timer should fire (a la
+     *             System.currentTimeMillis()). If the time is in the
+     *             past then the timer will fire the next time through
+     *             the main reactor.
+     * @param handler the TimerHandler that should be invoked when the
+     *                timer is ripe.
+     * @return the Timer that was created.
+     */
+    public Timer timerCreateAbs(long time, TimerHandler handler) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do Timer operations");
+    }
+
+    /**
+     * XXX - javadoc
+     */
+    public void timerSubmitRel(long delta, Timer timer) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do Timer operations");
+    }
+
+    /**
+     * XXX - javadoc
+     */
+    public void timerSubmitAbs(final long time, final Timer timer) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do Timer operations");
+    }
+
+    /**
+     * Creates a registered Valve for a SelectableChannel.  No
+     * operations will be selected for this Valve yet.  The Valve's
+     * enable and disable methods can be used to express interest in
+     * I/O operations.
+     *
+     * @param channel the SelectableChannel for which a Valve is needed.
+     * @param handler the SelectableChannel for which a Valve is needed.
+     * @return the Valve for this channel
+     */
+    public Valve valveCreate(SelectableChannel channel, ValveHandler handler) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do I/O operations");
+    }
+
+    /**
+     * Registers a Valve for a SelectableChannel.  No operations will be
+     * selected for this Valve yet.  The Valve's enable and disable methods can
+     * be used to express interest in I/O operations.  The Valve can not be
+     * currently registered at the time this method is invoked.
+     *
+     * @param channel the SelectableChannel for which a Valve is needed.
+     * @param valve the Valve that is being registered.
+     */
+    public void valveRegisgter(SelectableChannel channel, Valve valve) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do I/O operations");
+    }
+
+    /**
+     * Sets the Valve for this channel replacing any previously registered
+     * valve and disabling all registered I/O operations previously set.
+
+     * @param channel the SelectableChannel for which a Valve is needed.
+     * @param valve the Valve to be associated with this channel.
+     * @return the old set of I/O operations enabled on this channel
+     *         before this call.
+     */
+    public int valveRegister(SelectableChannel channel, Valve valve) {
+        throw new UnsupportedOperationException("WorkReactor doesn't do I/O operations");
     }
 }

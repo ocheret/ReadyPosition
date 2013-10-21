@@ -1,5 +1,6 @@
 package com.readyposition.reactor;
 
+import java.nio.channels.SelectableChannel;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
@@ -10,7 +11,8 @@ import com.readyposition.collections.heap.HeapLongG;
 public class TimerReactor extends WorkReactor
 {
     /** Class wide logger. */
-    private final static Logger s_logger = LoggerFactory.getLogger(TimerReactor.class);
+    private final static Logger s_logger =
+        LoggerFactory.getLogger(TimerReactor.class);
 
     /** Default singleton instance returned by getDefaultInstance(). */
     private static TimerReactor s_defaultInstance;
@@ -296,5 +298,45 @@ public class TimerReactor extends WorkReactor
 
         // We're done with any ripe timers.  Now handle the work queue.
         super.doWork();
+    }
+
+    /**
+     * Creates a registered Valve for a SelectableChannel.  No
+     * operations will be selected for this Valve yet.  The Valve's
+     * enable and disable methods can be used to express interest in
+     * I/O operations.
+     *
+     * @param channel the SelectableChannel for which a Valve is needed.
+     * @param handler the SelectableChannel for which a Valve is needed.
+     * @return the Valve for this channel
+     */
+    public Valve valveCreate(SelectableChannel channel, ValveHandler handler) {
+        throw new UnsupportedOperationException("TimerReactor doesn't do I/O operations");
+    }
+
+    /**
+     * Registers a Valve for a SelectableChannel.  No operations will be
+     * selected for this Valve yet.  The Valve's enable and disable methods can
+     * be used to express interest in I/O operations.  The Valve can not be
+     * currently registered at the time this method is invoked.
+     *
+     * @param channel the SelectableChannel for which a Valve is needed.
+     * @param valve the Valve that is being registered.
+     */
+    public void valveRegisgter(SelectableChannel channel, Valve valve) {
+        throw new UnsupportedOperationException("TimerReactor doesn't do I/O operations");
+    }
+
+    /**
+     * Sets the Valve for this channel replacing any previously registered
+     * valve and disabling all registered I/O operations previously set.
+
+     * @param channel the SelectableChannel for which a Valve is needed.
+     * @param valve the Valve to be associated with this channel.
+     * @return the old set of I/O operations enabled on this channel
+     *         before this call.
+     */
+    public int valveRegister(SelectableChannel channel, Valve valve) {
+        throw new UnsupportedOperationException("TimerReactor doesn't do I/O operations");
     }
 }
