@@ -76,12 +76,12 @@ public abstract class Task<T extends Task<T>> extends Yoke<T>
         m_state.set(STATE_CANCELED);
     }
 
-    /** Determines if this task has been cancelled. */
+    /** Determines if this task is pending. */
     public boolean isPending() {
         return m_state.get() == STATE_PENDING;
     }
 
-    /** Determines if this task has been cancelled. */
+    /** Determines if this task is active. */
     public boolean isActive() {
         return m_state.get() == STATE_ACTIVE;
     }
