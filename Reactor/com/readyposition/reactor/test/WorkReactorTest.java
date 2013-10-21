@@ -31,7 +31,8 @@ public class WorkReactorTest
 
     @Before
     public void setUp() {
-        m_workReactor = WorkReactor.getWorkReactor("TestWorkReactor_" + ++m_loopCount);
+        m_workReactor = WorkReactor.getWorkReactor("TestWorkReactor_" +
+                                                   ++m_loopCount);
     }
 
     @After

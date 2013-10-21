@@ -22,6 +22,9 @@ public class WorkReactor implements Runnable
     /** A linked list of active work objects. */
     protected Work m_activeWorks = new SimpleWork();
 
+    /** A linked list of work from other threads pending to be submitted */
+    protected Work m_pendingWorks = new SimpleWork();
+
     /** When true, the loop will terminate. */
     protected boolean m_done;
 
@@ -127,14 +130,20 @@ public class WorkReactor implements Runnable
     public void workSubmit(Work work) {
         if (!work.isPending()) {
             throw new IllegalStateException(
-                                            "Attempt to submit a Work that is already busy.");
+                "Attempt to submit a Work that is already busy.");
         }
         if (m_thread != Thread.currentThread()) {
+            // Another thread is sending us work.  Put it on the
+            // pending queue.  The loop in doWork() will consume these
+            // at the appropriate time.
             synchronized (this) {
-                m_queuedWorks.insertLeft(work);
+                m_pendingWorks.insertLeft(work);
+                wakeup();
             }
-            wakeup();
         } else {
+            // Since this is the WorkReactor's thread, we don't need
+            // to synchronize here.  We can add work directly to the
+            // end of the queue.
             m_queuedWorks.insertLeft(work);
         }
     }
@@ -173,7 +182,16 @@ public class WorkReactor implements Runnable
      *
      * @return true if ther is work pending.
      */
-    protected synchronized boolean isWorkPending() {
+    protected boolean isWorkPending() {
+        // See if there is any pending work submitted by other threads
+        synchronized (this) {
+            if (m_pendingWorks != m_pendingWorks.getRight()) {
+                // Transfer any pending work submitted by other threads
+                // to the active queue
+                m_queuedWorks.insertLeft(m_pendingWorks);
+                m_pendingWorks.remove();
+            }
+        }
         m_isWorkToDo = (m_queuedWorks != m_queuedWorks.getRight());
         return m_isWorkToDo;
     }
@@ -185,13 +203,11 @@ public class WorkReactor implements Runnable
             return;
         }
 
-        synchronized (this) {
-            // Transfer the works to another queue that can't be
-            // touched by callbacks.
-            if (m_queuedWorks != m_queuedWorks.getRight()) {
-                m_activeWorks.insertLeft(m_queuedWorks);
-                m_queuedWorks.remove();
-            }
+        // Transfer the works to another queue that can't be
+        // touched by callbacks.
+        if (m_queuedWorks != m_queuedWorks.getRight()) {
+            m_activeWorks.insertLeft(m_queuedWorks);
+            m_queuedWorks.remove();
         }
 
         // We can execute the work items on the temp queue without
@@ -199,44 +215,44 @@ public class WorkReactor implements Runnable
         for (Work work = m_activeWorks.getRight();
              work != m_activeWorks;
              work = m_activeWorks.getRight())
-            {
-                // Take the work off the queue now since we may return early
-                work.remove();
+        {
+            // Take the work off the queue now since we may return early
+            work.remove();
 
-                if (work.isCanceled() || !work.activate()) {
-                    // If the work was canceled then we're almost done
-                    // with it.  If it isn't canceled, then the only way
-                    // we won't be able to activate the work is if it
-                    // was canceled between the two calls in the
-                    // condition.  Don't do the work but note that we're
-                    // done with this
-                    work.setToPending();
-                    continue;
-                }
+            if (work.isCanceled() || !work.activate()) {
+                // If the work was canceled then we're almost done
+                // with it.  If it isn't canceled, then the only way
+                // we won't be able to activate the work is if it
+                // was canceled between the two calls in the
+                // condition.  Don't do the work but note that we're
+                // done with this
+                work.setToPending();
+                continue;
+            }
 
-                // If we're here then the work is active
-                try {
-                    if (work.workFire()) {
-                        // The work wants to be resubmitted.
-                        if (work.complete()) {
-                            workSubmit(work);
-                        } else {
-                            // We were not able to successfully transition back to
-                            // the pending state.  This means that the Work
-                            // was cancelled after a successful run so we won't
-                            // resubmit.
-                            work.setToPending();
-                        }
+            // If we're here then the work is active
+            try {
+                if (work.workFire()) {
+                    // The work wants to be resubmitted.
+                    if (work.complete()) {
+                        workSubmit(work);
                     } else {
-                        // This work is done and won't be resumitted
+                        // We were not able to successfully transition back to
+                        // the pending state.  This means that the Work
+                        // was cancelled after a successful run so we won't
+                        // resubmit.
                         work.setToPending();
                     }
-                } catch (Throwable t) {
-                    // XXX - we need some sort of callback so that we can deal
-                    // with a failed Work, no?
-                    s_logger.warn(t.toString(), t);
+                } else {
+                    // This work is done and won't be resumitted
+                    work.setToPending();
                 }
+            } catch (Throwable t) {
+                // XXX - we need some sort of callback so that we can deal
+                // with a failed Work, no?
+                s_logger.warn(t.toString(), t);
             }
+        }
     }
 
     /** Ensures that the reactor notices newly registered work. */
